@@ -1,0 +1,2137 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top, #102d61 0%, #061329 45%, #020713 100%);
+    color: white;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    background: rgba(2, 10, 28, 0.95);
+    padding: 22px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid #008cff;
+    box-shadow: 0 5px 25px #007bff33;
+}
+
+.logo {
+    color: #00bfff;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 0 15px #008cff;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #00bfff;
+}
+
+/* MAIN */
+main {
+    padding: 40px 6%;
+}
+
+/* HERO */
+.welcome {
+    background:
+        radial-gradient(circle at 80% 20%, #0878d9 0%, transparent 45%),
+        linear-gradient(120deg, #07152e, #064b91);
+    padding: 70px 45px;
+    border-radius: 22px;
+    margin-bottom: 50px;
+    border: 1px solid #087cff;
+    box-shadow: 0 0 30px #0066ff44;
+}
+
+.welcome h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.welcome p {
+    font-size: 18px;
+    color: #c8e6ff;
+}
+
+/* MUSIC SECTION */
+h2 {
+    color: #00bfff;
+    font-size: 29px;
+    margin-bottom: 28px;
+}
+
+#music-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+}
+
+.song {
+    background: linear-gradient(145deg, #10294c, #07152c);
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid #14569b;
+    box-shadow: 0 8px 25px #0008;
+    transition: 0.3s;
+}
+
+.song:hover {
+    transform: translateY(-6px);
+    border-color: #00bfff;
+    box-shadow: 0 0 22px #008cff66;
+}
+
+.cover {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 13px;
+    border: 1px solid #008cff;
+}
+
+.song h3 {
+    font-size: 17px;
+    margin: 17px 0;
+    min-height: 40px;
+}
+
+audio {
+    width: 100%;
+    height: 42px;
+}
+
+.song a {
+    display: block;
+    text-align: center;
+    background: linear-gradient(90deg, #0066ff, #00bfff);
+    color: white;
+    padding: 12px;
+    border-radius: 25px;
+    margin-top: 17px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.song a:hover {
+    background: white;
+    color: #0066ff;
+}
+
+/* FOOTER */
+footer {
+    background: #010817;
+    border-top: 1px solid #007bff;
+    padding: 30px;
+    text-align: center;
+    color: #b8d5f5;
+    margin-top: 55px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    .welcome {
+        padding: 40px 22px;
+    }
+
+    .welcome h1 {
+        font-size: 34px;
+    }
+
+    main {
+        padding: 25px 4%;
+    }
+}
+/* SEARCH BAR */
+.search-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 45px;
+}
+
+#search-input {
+    width: 70%;
+    max-width: 550px;
+    padding: 15px 20px;
+    border: 2px solid #087cff;
+    border-radius: 30px;
+    background: #07152c;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+#search-input:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 15px #00bfff66;
+}
+
+#search-button {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #0066ff, #00bfff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background: white;
+    color: #0066ff;
+}
+
+@media (max-width: 500px) {
+    .search-section {
+        flex-direction: column;
+    }
+
+    #search-input {
+        width: 100%;
+    }
+}
+/* CATEGORY FILTER */
+#category-filter {
+    display: block;
+    width: 220px;
+    padding: 13px 18px;
+    margin: 0 0 25px 0;
+    background: #071b3d;
+    color: #00bfff;
+    border: 2px solid #008cff;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+#category-filter:focus {
+    box-shadow: 0 0 15px #008cff88;
+}
+
+#category-filter option {
+    background: #071b3d;
+    color: white;
+}
+/* EDIT AND DELETE BUTTONS */
+.song-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.song-actions button {
+    flex: 1;
+    padding: 11px 8px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.edit-song {
+    background: #008cff;
+    color: white;
+}
+
+.delete-song {
+    background: #d62828;
+    color: white;
+}
+
+.song-actions button:hover {
+    opacity: 0.8;
+}
+
+
+/* PROFESSIONAL SIDEBAR */
+
+body {
+    margin-left: 250px;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #061329;
+    border-right: 1px solid #12345c;
+    padding: 25px 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    font-size: 21px;
+    font-weight: bold;
+    color: #00bfff;
+    margin-bottom: 45px;
+}
+
+.sidebar-heading {
+    color: #7185a5;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 20px 0 12px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-nav a {
+    text-decoration: none;
+    color: #c4d3e8;
+    padding: 13px 14px;
+    border-radius: 9px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: #073b70;
+    color: #00bfff;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    border-top: 1px solid #173253;
+    padding-top: 20px;
+    color: #00bfff;
+}
+
+.sidebar-bottom small {
+    color: #8295b1;
+}
+
+/* MOBILE SUPPORT */
+@media (max-width: 700px) {
+    body {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar-logo {
+        margin-bottom: 15px;
+    }
+
+    .sidebar-bottom {
+        display: none;
+    }
+}
+
+/* NOW PLAYING BAR */
+
+#now-playing-bar {
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    min-height: 85px;
+    background: #061329;
+    border-top: 1px solid #087cff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 25px;
+    box-sizing: border-box;
+    z-index: 2000;
+    gap: 20px;
+}
+
+.now-playing-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 180px;
+}
+
+#now-playing-image {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.now-playing-info h4 {
+    color: white;
+    margin: 0 0 6px;
+}
+
+.now-playing-info p {
+    color: #8ca4c4;
+    margin: 0;
+    font-size: 12px;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    max-width: 550px;
+}
+
+#play-pause-button {
+    background: #008cff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#song-progress {
+    flex: 1;
+    cursor: pointer;
+    accent-color: #00bfff;
+}
+
+#current-time,
+#total-time {
+    color: white;
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    #now-playing-bar {
+        left: 0;
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .now-playing-info {
+        min-width: 0;
+    }
+
+    .now-playing-info p {
+        display: none;
+    }
+
+    .player-controls {
+        gap: 6px;
+    }
+}
+
+
+/* =================================
+   GABY MUSIC PROFESSIONAL DESIGN
+================================= */
+
+/* MAIN CONTENT */
+
+.main-content {
+    padding: 30px;
+    padding-bottom: 130px;
+    max-width: 1500px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h2 {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.header p {
+    color: #8ca4c4;
+    margin: 0;
+}
+
+/* HERO SECTION */
+
+.welcome {
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    padding: 35px;
+    margin-bottom: 35px;
+    border-radius: 20px;
+    background:
+        linear-gradient(90deg, #061329, #07549a);
+    box-shadow: 0 10px 35px #0005;
+    box-sizing: border-box;
+}
+
+.welcome-content {
+    max-width: 600px;
+}
+
+.welcome-label {
+    color: #00bfff;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.welcome h1 {
+    font-size: clamp(32px, 5vw, 55px);
+    margin: 15px 0;
+    color: white;
+}
+
+.welcome-content > p:not(.welcome-label) {
+    color: #c5d9f1;
+    line-height: 1.7;
+}
+
+.hero-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 25px;
+    border-radius: 25px;
+    background: #00aaff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.hero-button:hover {
+    background: white;
+    color: #0066ff;
+}
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    color: white;
+    font-size: 25px;
+}
+
+.section-heading p {
+    color: #8ca4c4;
+}
+
+/* ADD SONG FORM */
+
+.add-song {
+    background: #0a1d38;
+    border: 1px solid #123d69;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 45px;
+}
+
+.add-song h2 {
+    color: #00bfff;
+}
+
+.add-song p {
+    color: #9bb0cc;
+}
+
+#add-song-form {
+    display: grid;
+    gap: 12px;
+    max-width: 650px;
+}
+
+#add-song-form label {
+    color: #c7d8ee;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+#add-song-form input,
+#add-song-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    background: #061329;
+    border: 1px solid #087cff;
+    border-radius: 8px;
+    color: white;
+}
+
+#add-song-form button {
+    padding: 14px;
+    margin-top: 15px;
+    background: linear-gradient(90deg, #0066ff, #00bfff);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#add-song-form button:hover {
+    opacity: 0.8;
+}
+
+/* ALL MUSIC */
+
+#music {
+    margin-bottom: 50px;
+}
+
+#music-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.song {
+    background: #0a1d38;
+    padding: 16px;
+    border: 1px solid #15385f;
+    border-radius: 14px;
+    transition: 0.3s;
+    min-width: 0;
+}
+
+.song:hover {
+    transform: translateY(-5px);
+    border-color: #00bfff;
+    box-shadow: 0 8px 25px #008cff22;
+}
+
+.song .cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.song h3 {
+    color: white;
+    font-size: 17px;
+}
+
+.song p {
+    color: #00bfff;
+}
+
+.song audio {
+    width: 100%;
+    margin: 12px 0;
+}
+
+.song > a {
+    display: inline-block;
+    color: #00bfff;
+    margin: 8px 0;
+    text-decoration: none;
+}
+
+/* RECENTLY ADDED */
+
+#recently-added {
+    margin-bottom: 50px;
+}
+
+#recent-songs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.recent-song {
+    background: #0a1d38;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #15385f;
+}
+
+.recent-song p {
+    color: white;
+    font-weight: bold;
+}
+
+.recent-song small {
+    color: #00bfff;
+}
+
+.recent-song button {
+    display: block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #087cff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* ABOUT */
+
+#about {
+    padding: 25px;
+    background: #0a1d38;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    color: #c5d9f1;
+    line-height: 1.8;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    border-top: 1px solid #15385f;
+    color: #8295b1;
+}
+
+.footer h3 {
+    color: #00bfff;
+}
+
+/* NOW PLAYING BAR */
+
+#now-playing-bar {
+    left: 250px;
+    right: 0;
+    min-height: 85px;
+    z-index: 2000;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 700px) {
+
+    .main-content {
+        padding: 15px;
+        padding-bottom: 130px;
+    }
+
+    .welcome {
+        padding: 22px;
+        min-height: 220px;
+    }
+
+    .header h2 {
+        font-size: 19px;
+    }
+
+    #music-list {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    #recent-songs {
+        grid-template-columns: 1fr;
+    }
+
+    #now-playing-bar {
+        left: 0;
+        right: 0;
+    }
+}
+
+
+/* =========================================
+   GABY MUSIC - NEON PURPLE PROFESSIONAL THEME
+========================================= */
+
+:root {
+    --purple: #a100ff;
+    --pink: #ff29b8;
+    --blue: #087cff;
+    --cyan: #00d9d0;
+    --dark: #08051c;
+    --card: #120d2c;
+    --white: #ffffff;
+}
+
+/* BACKGROUND */
+
+body {
+    background:
+        radial-gradient(ellipse at 15% 15%, #40107166, transparent 35%),
+        radial-gradient(ellipse at 85% 35%, #003f9b55, transparent 40%),
+        radial-gradient(ellipse at 50% 90%, #65005a33, transparent 40%),
+        linear-gradient(135deg, #050414, #100829, #050b20);
+    color: var(--white);
+    background-attachment: fixed;
+}
+
+/* MUSIC ATMOSPHERE */
+
+body::before {
+    content: "🎸     🎹       🎧       🎷       🎼";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: clamp(35px, 6vw, 85px);
+    opacity: 0.055;
+    filter: grayscale(0.2);
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    background:
+        linear-gradient(180deg, #100626, #08051b 75%, #16052b);
+    border-right: 1px solid #a100ff77;
+    box-shadow: 8px 0 30px #8b00ff18;
+}
+
+.sidebar-logo {
+    color: #d65bff;
+    text-shadow: 0 0 15px #a100ff;
+    font-size: 23px;
+}
+
+.sidebar-heading {
+    color: #a58bbf;
+}
+
+.sidebar-nav a {
+    color: #e0d8f3;
+    border: 1px solid transparent;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: linear-gradient(90deg, #8200ff, #3e36d9);
+    color: white;
+    box-shadow: 0 0 18px #a100ff55;
+    border-color: #d65bff;
+}
+
+.sidebar-bottom {
+    color: #d65bff;
+    border-color: #a100ff55;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+    color: white;
+}
+
+/* HEADER */
+
+.header {
+    background: #100b25cc;
+    padding: 18px 22px;
+    border-radius: 15px;
+    border: 1px solid #54248a;
+}
+
+.header h2 {
+    color: white;
+}
+
+.header p {
+    color: #bca9d9;
+}
+
+/* HERO WITH MUSIC COLORS */
+
+.welcome {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 10% 50%, #a100ff99, transparent 35%),
+        radial-gradient(circle at 90% 20%, #008cff99, transparent 40%),
+        linear-gradient(120deg, #16062d, #080b2a, #16052c);
+    border: 1px solid #b026ff;
+    box-shadow:
+        0 0 20px #a100ff44,
+        inset 0 0 35px #087cff22;
+}
+
+.welcome::after {
+    content: "🎧  🎸  🎹  🎷";
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+    font-size: clamp(25px, 4vw, 48px);
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.welcome h1 {
+    background: linear-gradient(90deg, #ffffff, #df65ff, #39caff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.welcome-label {
+    color: #ff5acb;
+}
+
+/* BUTTONS */
+
+.hero-button,
+#search-button,
+#add-song-form button {
+    background: linear-gradient(100deg, #a100ff, #e500a4, #075cff);
+    background-size: 200% auto;
+    box-shadow: 0 0 18px #a100ff55;
+    transition: 0.35s;
+}
+
+.hero-button:hover,
+#search-button:hover,
+#add-song-form button:hover {
+    background-position: right center;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* SEARCH */
+
+#search-input {
+    background: #100a27;
+    border-color: #a100ff;
+    box-shadow: 0 0 12px #a100ff22;
+}
+
+#search-input:focus {
+    border-color: #00d9d0;
+    box-shadow: 0 0 18px #00d9d066;
+}
+
+/* ADD SONG */
+
+.add-song {
+    background:
+        linear-gradient(145deg, #1b0b36, #0c102b);
+    border: 1px solid #a100ff;
+    box-shadow: 0 0 22px #a100ff22;
+}
+
+.add-song h2 {
+    color: #df65ff;
+}
+
+#add-song-form input,
+#add-song-form select {
+    background: #08071c;
+    border-color: #7040a8;
+}
+
+#add-song-form input:focus,
+#add-song-form select:focus {
+    border-color: #00d9d0;
+    outline: none;
+    box-shadow: 0 0 12px #00d9d044;
+}
+
+/* MUSIC CARDS */
+
+.song {
+    background: linear-gradient(145deg, #1b1036, #0b1027);
+    border: 1px solid #54248a;
+    box-shadow: 0 8px 25px #0008;
+}
+
+.song:hover {
+    border-color: #e044ff;
+    box-shadow:
+        0 0 22px #a100ff55,
+        0 0 35px #087cff22;
+}
+
+.song .cover {
+    border: 1px solid #a100ff;
+}
+
+.song h3 {
+    color: white;
+}
+
+.song p {
+    color: #00d9d0;
+}
+
+.song > a {
+    color: #ff5acb;
+}
+
+.song-actions .edit-song {
+    background: linear-gradient(90deg, #8b00ff, #087cff);
+}
+
+.song-actions .delete-song {
+    background: linear-gradient(90deg, #d62865, #9e174a);
+}
+
+/* CATEGORY FILTER */
+
+#category-filter {
+    background: #130b2d;
+    color: #e9c8ff;
+    border-color: #a100ff;
+}
+
+/* RECENT SONGS */
+
+.recent-song {
+    background: linear-gradient(145deg, #1c1038, #0b1027);
+    border: 1px solid #6934a5;
+    transition: 0.3s;
+}
+
+.recent-song:hover {
+    border-color: #ff29b8;
+    box-shadow: 0 0 18px #ff29b844;
+    transform: translateY(-3px);
+}
+
+.recent-song small {
+    color: #00d9d0;
+}
+
+.recent-song button {
+    background: linear-gradient(90deg, #a100ff, #087cff);
+}
+
+/* ABOUT */
+
+#about {
+    background:
+        radial-gradient(circle at 90% 20%, #7c00b755, transparent 40%),
+        linear-gradient(120deg, #1a0d35, #0b1028);
+    border: 1px solid #7734ad;
+}
+
+/* NOW PLAYING BAR */
+
+#now-playing-bar {
+    background:
+        linear-gradient(90deg, #100622, #0a1029, #170725);
+    border-top: 1px solid #a100ff;
+    box-shadow: 0 -5px 30px #a100ff22;
+}
+
+#play-pause-button {
+    background: linear-gradient(135deg, #a100ff, #087cff);
+    box-shadow: 0 0 15px #a100ff66;
+}
+
+#song-progress {
+    accent-color: #d000ff;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #08051b;
+    border-color: #a100ff77;
+}
+
+.footer h3 {
+    color: #d65bff;
+}
+
+/* SCROLLBAR */
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #08051c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#a100ff, #087cff);
+    border-radius: 10px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .welcome::after {
+        font-size: 25px;
+        right: 12px;
+    }
+}
+
+
+/* GABY MUSIC WATERMARK */
+
+body {
+    position: relative;
+}
+
+body::after {
+    content: "GABY MUSIC";
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(-25deg);
+
+    font-size: clamp(65px, 12vw, 180px);
+    font-weight: 900;
+    letter-spacing: 15px;
+
+    color: #ffffff;
+    opacity: 0.035;
+
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Keep website content above watermark */
+
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar {
+    z-index: 1000;
+}
+
+#now-playing-bar {
+    z-index: 2000;
+}
+
+#music-visualizer {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 50px;
+    min-width: 100px;
+    margin: 0 15px;
+    position: relative;
+    z-index: 9999;
+}
+
+
+#music-visualizer span {
+    display: block;
+    width: 6px;
+    height: 8px;
+    border-radius: 10px;
+    background: linear-gradient(to top, #087cff, #a100ff, #ff29b8);
+}
+
+#music-visualizer.playing span {
+    animation: musicBars 0.6s ease-in-out infinite alternate;
+}
+
+#music-visualizer span:nth-child(2n) {
+    animation-delay: 0.2s;
+}
+
+#music-visualizer span:nth-child(3n) {
+    animation-delay: 0.4s;
+}
+
+@keyframes musicBars {
+    from { height: 6px; }
+    to { height: 40px; }
+}
+
+
+/* =================================
+   GABY MUSIC - NEW ANIMATIONS
+================================= */
+
+/* Smooth music card animation */
+.song,
+.recent-song {
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+}
+
+/* Hover effect */
+.song:hover,
+.recent-song:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #00bfff;
+    box-shadow:
+        0 0 12px #008cff88,
+        0 12px 30px #0008;
+}
+
+/* Cover image animation */
+.song .cover {
+    transition: transform 0.4s ease,
+                filter 0.4s ease;
+}
+
+.song:hover .cover {
+    transform: scale(1.03);
+    filter: brightness(1.12);
+}
+
+/* Buttons animation */
+button,
+.hero-button {
+    transition: all 0.25s ease;
+}
+
+button:hover,
+.hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #008cff88;
+}
+
+/* Keyboard accessibility */
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid #00bfff;
+    outline-offset: 4px;
+}
+
+/* Small screens */
+@media (max-width: 500px) {
+    #music-list {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome h1 {
+        font-size: 32px;
+    }
+
+    .main-content {
+        padding: 12px;
+        padding-bottom: 140px;
+    }
+}
+
+/* Respect reduced motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .song,
+    .recent-song,
+    .song .cover,
+    button,
+    .hero-button {
+        transition: none;
+    }
+}
+
+
+/* =================================
+   GABY MUSIC - PREMIUM EFFECTS
+================================= */
+
+/* 1. Glass effect on music cards */
+.song,
+.recent-song {
+    background: linear-gradient(
+        145deg,
+        rgba(15, 45, 80, 0.95),
+        rgba(4, 17, 38, 0.95)
+    );
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+}
+
+/* 2. Neon glowing card borders */
+.song:hover,
+.recent-song:hover {
+    border-color: #00bfff;
+    box-shadow:
+        0 0 10px #008cff66,
+        0 0 25px #008cff44,
+        0 15px 35px #0008;
+}
+
+/* 3. Animated hero background */
+.welcome {
+    background:
+        radial-gradient(circle at 80% 30%, #7b2cff55, transparent 35%),
+        radial-gradient(circle at 20% 80%, #008cff55, transparent 40%),
+        linear-gradient(120deg, #061329, #102d61);
+    background-size: 150% 150%;
+    animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    from {
+        background-position: 0% 50%;
+    }
+    to {
+        background-position: 100% 50%;
+    }
+}
+
+/* 4. Neon heading */
+.welcome h1 {
+    text-shadow:
+        0 0 8px #008cff,
+        0 0 20px #008cff88;
+}
+
+/* 5. Search input glow */
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #00bfff !important;
+    box-shadow: 0 0 12px #008cff77;
+}
+
+/* 6. Download link effect */
+.song > a:hover {
+    color: white;
+    text-shadow: 0 0 10px #00bfff;
+}
+
+/* 7. Smooth page scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 8. Section heading decoration */
+.section-heading h2 {
+    text-shadow: 0 0 12px #008cff55;
+}
+
+/* 9. Mobile layout protection */
+@media (max-width: 500px) {
+    .song:hover,
+    .recent-song:hover {
+        transform: translateY(-3px);
+    }
+
+    .welcome {
+        animation: none;
+    }
+}
+
+/* 10. Reduce motion when requested */
+@media (prefers-reduced-motion: reduce) {
+    .welcome {
+        animation: none;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+
+/* =====================================
+   GABY MUSIC - ADVANCED ANIMATIONS
+===================================== */
+
+/* 1. Floating effect on music cards */
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* 2. Shining music covers */
+.song .cover {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.song:hover .cover {
+    transform: scale(1.04);
+    filter: brightness(1.2) saturate(1.2);
+}
+
+/* 3. Animated neon buttons */
+@keyframes buttonGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px #087cff;
+    }
+    50% {
+        box-shadow: 0 0 20px #00bfff, 0 0 30px #7b2cff;
+    }
+}
+
+#play-pause-button {
+    animation: buttonGlow 2s ease-in-out infinite;
+}
+
+/* 4. Now playing bar glow */
+@keyframes playerGlow {
+    0%, 100% { border-top-color: #087cff; }
+    50% { border-top-color: #d000ff; }
+}
+
+#now-playing-bar {
+    animation: playerGlow 3s ease-in-out infinite;
+}
+
+/* 5. Equalizer bars */
+#music-visualizer span {
+    transform-origin: bottom;
+}
+
+#music-visualizer.playing span {
+    animation: equalizer 0.7s ease-in-out infinite alternate;
+}
+
+#music-visualizer.playing span:nth-child(2n) {
+    animation-delay: 0.2s;
+}
+
+#music-visualizer.playing span:nth-child(3n) {
+    animation-delay: 0.4s;
+}
+
+@keyframes equalizer {
+    from { transform: scaleY(0.2); }
+    to { transform: scaleY(4); }
+}
+
+/* 6. Fade-in for song cards */
+@keyframes songAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.song {
+    animation: songAppear 0.7s ease both;
+}
+
+/* 7. Search bar focus effect */
+#search-input:focus {
+    box-shadow: 0 0 15px #00bfff88;
+    border-color: #00bfff;
+}
+
+/* 8. Hero title glow */
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 8px #087cff; }
+    50% { text-shadow: 0 0 25px #00bfff, 0 0 35px #7b2cff; }
+}
+
+.welcome h1 {
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+/* 9. Recently added cards */
+.recent-song:hover {
+    transform: translateY(-7px) scale(1.02);
+}
+
+/* 10. Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =====================================
+   GABY MUSIC - EXTRA ANIMATIONS
+===================================== */
+
+/* 1. Glowing logo */
+.logo,
+.sidebar-logo {
+    animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    from { text-shadow: 0 0 5px #008cff; }
+    to {
+        text-shadow:
+            0 0 12px #00bfff,
+            0 0 25px #8a2bff;
+    }
+}
+
+/* 2. Animated music cards border */
+.song {
+    position: relative;
+    overflow: hidden;
+}
+
+.song:hover {
+    border-color: #a100ff;
+    box-shadow: 0 0 22px #8a2bff66;
+}
+
+/* 3. Floating music notes */
+@keyframes musicFloat {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    20% { opacity: 0.5; }
+    80% { opacity: 0.5; }
+    100% {
+        transform: translateY(-100px) rotate(25deg);
+        opacity: 0;
+    }
+}
+
+.music-note {
+    position: fixed;
+    bottom: -30px;
+    color: #00bfff;
+    font-size: 25px;
+    pointer-events: none;
+    z-index: 0;
+    animation: musicFloat 7s linear infinite;
+}
+
+/* 4. Menu hover animation */
+.sidebar-nav a {
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    transform: translateX(7px);
+    text-shadow: 0 0 10px #00bfff;
+}
+
+/* 5. Animated search bar */
+#search-input {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+#search-input:focus {
+    box-shadow: 0 0 18px #087cff99;
+}
+
+/* 6. Cover image zoom */
+.song .cover {
+    transition: transform 0.5s ease;
+}
+
+.song:hover .cover {
+    transform: scale(1.06);
+}
+
+/* 7. Animated section headings */
+.section-heading h2 {
+    animation: headingPulse 4s ease-in-out infinite;
+}
+
+@keyframes headingPulse {
+    0%, 100% { text-shadow: 0 0 3px #008cff; }
+    50% { text-shadow: 0 0 15px #00bfff; }
+}
+
+/* 8. Add song button */
+#add-song-form button:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 20px #087cff99;
+}
+
+/* 9. Smooth page appearance */
+.main-content {
+    animation: pageAppear 0.8s ease;
+}
+
+@keyframes pageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 10. Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ==========================================
+   GABY MUSIC - SIGNATURE EFFECTS
+   FUTURISTIC HOLOGRAPHIC EXPERIENCE
+========================================== */
+
+/* 1. HOLOGRAPHIC MUSIC CARDS */
+
+.song {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.song::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+        115deg,
+        transparent 15%,
+        rgba(0, 191, 255, 0.18) 35%,
+        rgba(180, 0, 255, 0.22) 50%,
+        rgba(255, 40, 180, 0.18) 65%,
+        transparent 85%
+    );
+    background-size: 250% 250%;
+    transition: opacity 0.4s ease;
+}
+
+.song:hover::before {
+    opacity: 1;
+    animation: holoSweep 2s linear infinite;
+}
+
+@keyframes holoSweep {
+    from { background-position: 200% 0; }
+    to { background-position: -100% 0; }
+}
+
+/* 2. LASER SCANNING LINE */
+
+.song::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background: #00eaff;
+    box-shadow:
+        0 0 10px #00eaff,
+        0 0 25px #8a2bff;
+}
+
+.song:hover::after {
+    opacity: 1;
+    animation: laserScan 2.5s linear infinite;
+}
+
+@keyframes laserScan {
+    from { top: -5px; }
+    to { top: 100%; }
+}
+
+/* 3. CINEMATIC ALBUM COVERS */
+
+.song .cover {
+    transition:
+        transform 0.7s cubic-bezier(.2,.8,.2,1),
+        filter 0.7s ease;
+}
+
+.song:hover .cover {
+    transform: scale(1.08) rotate(-1deg);
+    filter:
+        brightness(1.2)
+        contrast(1.08)
+        saturate(1.3);
+}
+
+/* 4. ENERGY RING ON PLAYER */
+
+#now-playing-bar {
+    position: fixed;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+#now-playing-bar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00eaff,
+        #b000ff,
+        #ff29b8,
+        transparent
+    );
+    animation: energyFlow 4s linear infinite;
+}
+
+@keyframes energyFlow {
+    to { left: 100%; }
+}
+
+/* 5. FUTURISTIC BUTTON LIGHT */
+
+#play-pause-button {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+#play-pause-button:hover {
+    transform: scale(1.15);
+    box-shadow:
+        0 0 10px #00eaff,
+        0 0 25px #8a2bff;
+}
+
+/* 6. NEON SECTION DIVIDERS */
+
+.section-heading {
+    position: relative;
+}
+
+.section-heading::after {
+    content: "";
+    display: block;
+    width: 65px;
+    height: 3px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #8a2bff,
+        #ff29b8
+    );
+    box-shadow: 0 0 12px #008cff;
+    animation: dividerPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes dividerPulse {
+    from { width: 45px; }
+    to { width: 110px; }
+}
+
+/* 7. REDUCED MOTION SUPPORT */
+
+@media (prefers-reduced-motion: reduce) {
+    .song::before,
+    .song::after,
+    #now-playing-bar::before,
+    .section-heading::after {
+        animation: none !important;
+    }
+}
+/* PROFESSIONAL GLASSMORPHISM */
+
+.sidebar {
+    background: rgba(8, 15, 35, 0.78);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#now-playing-bar {
+    background: rgba(10, 18, 40, 0.82);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -8px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* Professional button interaction */
+
+button,
+a {
+    transition: all 0.25s ease;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid #00d9ff;
+    outline-offset: 4px;
+}
+
+/* Smooth scrolling */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect reduced-motion settings */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+/* EMERALD GREEN PREMIUM ANIMATION */
+
+@keyframes emeraldGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(0, 255, 150, 0.15);
+        border-color: rgba(0, 255, 150, 0.2);
+    }
+
+    50% {
+        box-shadow:
+            0 0 12px rgba(0, 255, 150, 0.45),
+            0 0 28px rgba(0, 255, 150, 0.2);
+        border-color: rgba(0, 255, 150, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(0, 255, 150, 0.15);
+        border-color: rgba(0, 255, 150, 0.2);
+    }
+}
+
+.song:hover {
+    animation: emeraldGlow 2s ease-in-out infinite;
+    border: 1px solid rgba(0, 255, 150, 0.3);
+}
+
+button:hover {
+    box-shadow: 0 0 12px rgba(0, 255, 150, 0.5);
+}
+/* GOLDEN PULSE TITLE ANIMATION */
+
+@keyframes goldenPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 5px rgba(255, 170, 0, 0.3),
+            0 0 12px rgba(255, 120, 0, 0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 12px rgba(255, 200, 0, 0.8),
+            0 0 30px rgba(255, 120, 0, 0.6);
+    }
+}
+
+.hero h1 {
+    animation: goldenPulse 3s ease-in-out infinite;
+}
+/* GABY MUSIC - AURORA WAVE */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #080d20;
+    background-image:
+        radial-gradient(ellipse at 15% 50%,
+            rgba(0, 255, 200, 0.20), transparent 45%),
+        radial-gradient(ellipse at 85% 30%,
+            rgba(150, 50, 255, 0.25), transparent 45%),
+        radial-gradient(ellipse at 50% 100%,
+            rgba(255, 40, 150, 0.18), transparent 50%);
+    background-size: 200% 200%;
+    animation: auroraMovement 9s ease-in-out infinite alternate;
+}
+
+@keyframes auroraMovement {
+    0% {
+        background-position: 0% 20%;
+    }
+
+    50% {
+        background-position: 100% 70%;
+    }
+
+    100% {
+        background-position: 20% 100%;
+    }
+}
+
+.hero h1 {
+    position: relative;
+    z-index: 1;
+    animation: auroraText 4s ease-in-out infinite alternate;
+}
+
+@keyframes auroraText {
+    from {
+        text-shadow: 0 0 8px #00ffd5;
+    }
+
+    to {
+        text-shadow:
+            0 0 15px #a855f7,
+            0 0 30px #ff35b8;
+    }
+}
+/* GABY MUSIC - PROFESSIONAL VISUALIZER */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 20% 50%, #063d50, transparent 45%),
+        radial-gradient(circle at 80% 40%, #38105e, transparent 45%),
+        linear-gradient(120deg, #070b1c, #11102b, #071a29);
+    background-size: 200% 200%;
+    animation: musicAtmosphere 10s ease-in-out infinite alternate;
+}
+
+@keyframes musicAtmosphere {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 20% 100%; }
+}
+
+.hero h1 {
+    color: #ffffff;
+    animation: musicTitle 3s ease-in-out infinite alternate;
+}
+
+@keyframes musicTitle {
+    from {
+        text-shadow: 0 0 8px #00eaff;
+    }
+    to {
+        text-shadow:
+            0 0 12px #00eaff,
+            0 0 25px #8b5cf6,
+            0 0 40px #ec4899;
+    }
+}
+
+/* Floating music atmosphere */
+
+.hero::before,
+.hero::after {
+    content: "♫";
+    position: absolute;
+    z-index: -1;
+    color: rgba(0, 234, 255, 0.25);
+    font-size: 90px;
+    animation: floatingNotes 7s ease-in-out infinite;
+}
+
+.hero::before {
+    top: 10%;
+    right: 12%;
+}
+
+.hero::after {
+    content: "♪";
+    bottom: 5%;
+    left: 12%;
+    color: rgba(236, 72, 153, 0.3);
+    animation-delay: 2s;
+}
+
+@keyframes floatingNotes {
+    0%, 100% {
+        transform: translateY(15px) rotate(-12deg);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-25px) rotate(12deg);
+        opacity: 1;
+    }
+}
+/* GABY MUSIC - CINEMATIC COVER EFFECT */
+
+.song .cover {
+    transition:
+        transform 0.8s cubic-bezier(.2,.8,.2,1),
+        filter 0.8s ease;
+    transform-origin: center;
+}
+
+.song:hover .cover {
+    transform: scale(1.10);
+    filter:
+        brightness(1.25)
+        saturate(1.4)
+        contrast(1.08)
+        hue-rotate(12deg);
+}
+
+/* Animated cinematic light */
+
+.song {
+    transition: box-shadow 0.5s ease;
+}
+
+.song:hover {
+    box-shadow:
+        0 10px 30px rgba(0, 220, 255, 0.18),
+        0 0 25px rgba(160, 70, 255, 0.20);
+}
+
+/* Premium play button */
+
+.song button {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.song button:hover {
+    transform: scale(1.12);
+    box-shadow:
+        0 0 12px rgba(0, 255, 220, 0.7),
+        0 0 25px rgba(150, 50, 255, 0.5);
+}
+
+/* Smooth animation */
+
+@media (prefers-reduced-motion: reduce) {
+    .song,
+    .song .cover,
+    .song button {
+        transition: none !important;
+    }
+}
+
+/* GABY MUSIC - CINEMATIC WELCOME */
+
+.hero h1 {
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #00eaff,
+        #b56bff,
+        #ffcf70,
+        #ffffff
+    );
+
+    background-size: 300% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: welcomeShimmer 5s linear infinite,
+               welcomeFloat 4s ease-in-out infinite;
+
+    filter: drop-shadow(0 0 12px rgba(0, 220, 255, 0.35));
+}
+
+@keyframes welcomeShimmer {
+    to {
+        background-position: 300% center;
+    }
+}
+
+@keyframes welcomeFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+/* Subtitle animation */
+
+.hero p {
+    animation: subtitleReveal 2s ease-out both;
+    color: #d7e6ff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(0, 220, 255, 0.35);
+}
+
+@keyframes subtitleReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        letter-spacing: 8px;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 2px;
+    }
+}
+
+/* Animated neon underline */
+
+.hero h1::after {
+    content: "";
+    display: block;
+    width: 75px;
+    height: 3px;
+    margin: 14px auto 0;
+    border-radius: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #a855f7,
+        #ffcf70
+    );
+
+    box-shadow: 0 0 15px #00eaff;
+    animation: welcomeLine 3s ease-in-out infinite alternate;
+}
+
+@keyframes welcomeLine {
+    from {
+        width: 45px;
+        opacity: 0.5;
+    }
+    to {
+        width: 180px;
+        opacity: 1;
+    }
+}

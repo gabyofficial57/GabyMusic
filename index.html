@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GABY MUSIC | Your Music. Your World.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            🎵 GABY MUSIC
+        </div>
+
+        <p class="sidebar-heading">MENU</p>
+
+        <nav class="sidebar-nav">
+            <a href="#home" class="active">🏠 Home</a>
+            <a href="#music">🎧 My Music</a>
+            <a href="#about">ℹ️ About</a>
+        </nav>
+
+        <p class="sidebar-heading">YOUR LIBRARY</p>
+
+        <nav class="sidebar-nav">
+            <a href="#music">💿 All Songs</a>
+            <a href="#recently-added">🕒 Recently Added</a>
+            <a href="#add-song">➕ Add Music</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>GABY MUSIC</p>
+            <small>Your Music. Your World.</small>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div>
+                <h2>Welcome to GABY MUSIC</h2>
+                <p>Your personal music collection</p>
+            </div>
+        </header>
+
+
+        <!-- HERO SECTION -->
+        <section class="welcome" id="home">
+
+            <div class="welcome-content">
+                <p class="welcome-label">WELCOME TO YOUR MUSIC WORLD</p>
+
+                <h1>Feel The Music 🎧</h1>
+
+                <p>
+                    Discover, play and enjoy your favourite music
+                    anytime with GABY MUSIC.
+                </p>
+
+                <a href="#music" class="hero-button">
+                    Explore Music
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH SECTION -->
+        <section class="search-section">
+
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Search your favourite songs..."
+            >
+
+            <button id="search-button">
+                Search
+            </button>
+
+        </section>
+
+
+        <!-- ADD NEW SONG -->
+        <section class="add-song" id="add-song">
+
+            <h2>➕ Add New Song</h2>
+
+            <p>Add your favourite MP3 music to your collection.</p>
+
+            <form id="add-song-form">
+
+                <label for="song-title">Song Title</label>
+
+                <input
+                    type="text"
+                    id="song-title"
+                    placeholder="Enter song title"
+                    required
+                >
+
+                <label for="song-category">Music Category</label>
+
+                <select id="song-category" required>
+                    <option value="Rwandan Music">Rwandan Music</option>
+                    <option value="Gospel">Gospel</option>
+                    <option value="Hip Hop">Hip Hop</option>
+                    <option value="Afrobeat">Afrobeat</option>
+                </select>
+
+                <label for="song-audio">Choose MP3 Music</label>
+
+                <input
+                    type="file"
+                    id="song-audio"
+                    accept="audio/mpeg,audio/mp3,audio/*"
+                    required
+                >
+
+                <label for="song-image">Choose Song Cover</label>
+
+                <input
+                    type="file"
+                    id="song-image"
+                    accept="image/*"
+                    required
+                >
+
+                <button type="submit">
+                    Add Song
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ALL MUSIC -->
+        <section id="music">
+
+            <div class="section-heading">
+                <h2>🎵 All Music</h2>
+
+                <p>
+                    Explore all songs in your music library.
+                </p>
+            </div>
+
+            <select id="category-filter">
+
+                <option value="All">All Music</option>
+                <option value="Rwandan Music">Rwandan Music</option>
+                <option value="Gospel">Gospel</option>
+                <option value="Hip Hop">Hip Hop</option>
+                <option value="Afrobeat">Afrobeat</option>
+
+            </select>
+
+            <div id="music-list"></div>
+
+        </section>
+
+
+        <!-- RECENTLY ADDED -->
+        <section id="recently-added">
+
+            <div class="section-heading">
+                <h2>🕒 Recently Added Songs</h2>
+
+                <p>
+                    Listen to the latest songs added to your library.
+                </p>
+            </div>
+
+            <div id="recent-songs"></div>
+
+        </section>
+
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+
+            <div class="section-heading">
+                <h2>ℹ️ About GABY MUSIC</h2>
+            </div>
+
+            <p>
+                GABY MUSIC is your personal music platform.
+                Add your favourite songs, organize them into
+                categories, play them and download your music.
+            </p>
+
+            <p>
+                Your Music. Your World.
+            </p>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <h3>🎵 GABY MUSIC</h3>
+
+            <p>Your Music. Your World.</p>
+
+            <p>
+                © 2026 GABY MUSIC. All rights reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <!-- NOW PLAYING BAR -->
+    <div id="now-playing-bar">
+
+        <div class="now-playing-info">
+
+            <img
+                id="now-playing-image"
+                src="images/cover1.jpg"
+                alt="Song cover"
+            >
+
+            <div>
+                <h4 id="now-playing-title">
+                    <div id="music-visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+                    No song playing
+                </h4>
+
+                <p>GABY MUSIC</p>
+            </div>
+
+        </div>
+
+
+        <div class="player-controls">
+
+            <button id="play-pause-button" type="button">
+                ▶
+            </button>
+
+            <span id="current-time">0:00</span>
+
+            <input
+                type="range"
+                id="song-progress"
+                value="0"
+                min="0"
+                max="100"
+                aria-label="Song progress"
+            >
+
+            <span id="total-time">0:00</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>
