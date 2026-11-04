@@ -174,4 +174,466 @@
 
             <p>Add your favourite MP3 music to your collection.</p>
 
-            <form id="add
+            <form id="add-song-form">
+
+                <label for="song-title">Song Title</label>
+
+                <input
+                    type="text"
+                    id="song-title"
+                    placeholder="Enter song title"
+                    required
+                >
+
+                <label for="song-category">Music Category</label>
+
+                <select id="song-category" required>
+
+                    <option value="Rwandan Music">Rwandan Music</option>
+                    <option value="Gospel">Gospel</option>
+                    <option value="Hip Hop">Hip Hop</option>
+                    <option value="Afrobeat">Afrobeat</option>
+                    <option value="Amapiano">Amapiano</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Electronic">Electronic</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Rock">Rock</option>
+
+                </select>
+
+                <label for="song-audio">Choose MP3 Music</label>
+
+                <input
+                    type="file"
+                    id="song-audio"
+                    accept="audio/mpeg,audio/mp3,audio/*"
+                    required
+                >
+
+                <label for="song-image">Choose Song Cover</label>
+
+                <input
+                    type="file"
+                    id="song-image"
+                    accept="image/*"
+                    required
+                >
+
+                <button type="submit">
+                    Add Song
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- TRENDING SECTION -->
+        <section id="trending">
+
+            <div class="section-heading">
+
+                <h2>🔥 Trending Music</h2>
+
+                <p>
+                    Discover music you might enjoy.
+                </p>
+
+            </div>
+
+            <div id="trending-songs"></div>
+
+        </section>
+
+
+        <!-- 8. FEATURED ARTIST SECTION -->
+        <section class="featured-artist" id="featured-artist">
+            <div class="section-heading">
+                <h2>🌟 Artist of the Week</h2>
+            </div>
+            <div class="featured-content">
+                <div class="featured-image">🎤</div>
+                <div class="featured-info">
+                    <h3>Element Eleéeh</h3>
+                    <p>Top Afrobeat artist bringing the heat this week. Check out the latest hits!</p>
+                    <button class="btn-outline">View Profile</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ALL MUSIC -->
+        <section id="music">
+
+            <div class="section-heading">
+
+                <h2>🎵 All Music</h2>
+
+                <p>
+                    Explore all songs in your music library.
+                </p>
+
+            </div>
+
+            <!-- 7. MOOD/GENRE PILLS (Quick Filters) -->
+            <div class="mood-filters">
+                <button class="mood-pill active" data-mood="all">🎵 All</button>
+                <button class="mood-pill" data-mood="happy">😊 Happy</button>
+                <button class="mood-pill" data-mood="chill">😌 Chill</button>
+                <button class="mood-pill" data-mood="workout">💪 Workout</button>
+                <button class="mood-pill" data-mood="focus">🧠 Focus</button>
+                <button class="mood-pill" data-mood="party">🎉 Party</button>
+            </div>
+
+
+            <!-- CATEGORY FILTER -->
+            <select id="category-filter">
+
+                <option value="All">All Music</option>
+
+                <option value="Rwandan Music">Rwandan Music</option>
+
+                <option value="Gospel">Gospel</option>
+
+                <option value="Hip Hop">Hip Hop</option>
+
+                <option value="Afrobeat">Afrobeat</option>
+
+                <option value="Amapiano">Amapiano</option>
+
+                <option value="Pop">Pop</option>
+
+                <option value="Electronic">Electronic</option>
+
+                <option value="Jazz">Jazz</option>
+
+                <option value="Rock">Rock</option>
+
+                <option value="GitHub Music">GitHub Music</option>
+
+            </select>
+
+
+            <!-- SONGS WILL APPEAR HERE -->
+            <div id="music-list"></div>
+
+        </section>
+
+
+        <!-- RECENTLY ADDED -->
+        <section id="recently-added">
+
+            <div class="section-heading">
+
+                <h2>🕒 Recently Added Songs</h2>
+
+                <p>
+                    Listen to the latest songs added to your library.
+                </p>
+
+            </div>
+
+            <div id="recent-songs"></div>
+
+        </section>
+
+
+        <!-- 14. NEWSLETTER SECTION -->
+        <section class="newsletter" id="newsletter">
+            <div class="section-heading">
+                <h2>📬 Stay Updated</h2>
+                <p>Get the latest music drops directly to your inbox.</p>
+            </div>
+            <form class="newsletter-form" id="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </section>
+
+
+        <!-- 15. TESTIMONIALS -->
+        <section class="testimonials" id="testimonials">
+            <div class="section-heading">
+                <h2>💬 What Fans Say</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"GABY MUSIC is the best platform for Rwandan music!"</p>
+                    <span>- Jean K.</span>
+                </div>
+                <div class="testimonial-card">
+                    <p>"I love the clean design and fast downloads."</p>
+                    <span>- Marie C.</span>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Finally, a place where I can find all my favorite Afrobeat tracks."</p>
+                    <span>- Patrick M.</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 16. FAQ SECTION -->
+        <section class="faq" id="faq">
+            <div class="section-heading">
+                <h2>❓ Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list">
+                <details>
+                    <summary>How do I download a song?</summary>
+                    <p>Click the "Download Song" button on any song card.</p>
+                </details>
+                <details>
+                    <summary>Can I add my own music?</summary>
+                    <p>Yes! Use the "Add Music" section in the sidebar.</p>
+                </details>
+                <details>
+                    <summary>Is GABY MUSIC free?</summary>
+                    <p>Yes, it is completely free to use and download.</p>
+                </details>
+            </div>
+        </section>
+
+
+        <!-- 17. CONTACT FORM -->
+        <section class="contact" id="contact">
+            <div class="section-heading">
+                <h2>📞 Contact Us</h2>
+            </div>
+            <form class="contact-form" id="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+
+            <div class="section-heading">
+
+                <h2>ℹ️ About GABY MUSIC</h2>
+
+            </div>
+
+            <p>
+                GABY MUSIC is your personal music platform.
+                Discover your favourite music, explore different
+                genres, add songs, organize your collection,
+                play and download music.
+            </p>
+
+            <p>
+                Your Music. Your World.
+            </p>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <h3>🎵 GABY MUSIC</h3>
+
+            <p>Your Music. Your World.</p>
+
+            <p>
+                © 2026 GABY MUSIC. All rights reserved.
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <!-- NOW PLAYING BAR -->
+    <div id="now-playing-bar">
+
+        <div class="now-playing-info">
+
+            <img
+                id="now-playing-image"
+                src="images/cover1.jpg"
+                alt="Song cover"
+            >
+
+            <div class="now-playing-details">
+
+                <h4 id="now-playing-title">
+                    No song playing
+                </h4>
+
+                <p>GABY MUSIC</p>
+
+                <!-- MUSIC VISUALIZER -->
+                <div id="music-visualizer">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PLAYER CONTROLS -->
+        <div class="player-controls">
+
+            <!-- 11. SHUFFLE BUTTON -->
+            <button id="btn-shuffle" type="button" aria-label="Shuffle" title="Shuffle">🔀</button>
+
+            <button id="play-pause-button" type="button" aria-label="Play or pause music">
+                ▶
+            </button>
+
+            <!-- 11. REPEAT BUTTON -->
+            <button id="btn-repeat" type="button" aria-label="Repeat" title="Repeat">🔁</button>
+
+            <span id="current-time">0:00</span>
+
+            <input
+                type="range"
+                id="song-progress"
+                value="0"
+                min="0"
+                max="100"
+                aria-label="Song progress"
+            >
+
+            <span id="total-time">0:00</span>
+
+            <!-- 9. LIKE BUTTON -->
+            <button id="btn-like" type="button" aria-label="Like song" title="Like">🤍</button>
+
+            <!-- 10. SHARE BUTTON -->
+            <button id="btn-share" type="button" aria-label="Share song" title="Share">📤</button>
+
+        </div>
+
+        <!-- 12. QUEUE BUTTON -->
+        <button id="btn-queue" type="button" class="queue-toggle" aria-label="Open queue" title="Queue">📋</button>
+
+    </div>
+
+
+    <!-- 12. QUEUE PANEL (Hidden by default) -->
+    <div id="queue-panel" class="side-panel">
+        <div class="panel-header">
+            <h3>📋 Up Next</h3>
+            <button id="close-queue" type="button">✕</button>
+        </div>
+        <div class="queue-list" id="queue-list">
+            <p class="empty-queue">Queue is empty</p>
+        </div>
+    </div>
+
+
+    <!-- 13. LYRICS MODAL (Hidden by default) -->
+    <div id="lyrics-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-lyrics" type="button" class="close-btn">✕</button>
+            <h3>🎤 Lyrics</h3>
+            <div class="lyrics-text" id="lyrics-text">
+                <p>Lyrics will appear here when a song is playing...</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 18. KEYBOARD SHORTCUTS MODAL -->
+    <div id="shortcuts-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-shortcuts" type="button" class="close-btn">✕</button>
+            <h3>⌨️ Keyboard Shortcuts</h3>
+            <ul class="shortcuts-list">
+                <li><kbd>Space</kbd> - Play / Pause</li>
+                <li><kbd>M</kbd> - Mute / Unmute</li>
+                <li><kbd>L</kbd> - Like current song</li>
+                <li><kbd>Q</kbd> - Open Queue</li>
+                <li><kbd>Esc</kbd> - Close modals</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+    <!-- NEW FEATURES SCRIPT (Add this to your script.js or keep separate) -->
+    <script>
+        // 1. Hide Preloader when page loads
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if(preloader) preloader.style.display = 'none';
+        });
+
+        // 2. Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById('scroll-progress');
+            if(progressBar) progressBar.style.width = scrolled + "%";
+            
+            // 20. Show/Hide Scroll to Top
+            const topBtn = document.getElementById('scroll-top-btn');
+            if(topBtn) topBtn.style.display = winScroll > 300 ? 'block' : 'none';
+        });
+
+        // 20. Scroll to Top functionality
+        document.getElementById('scroll-top-btn')?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Dark/Light Mode Toggle
+        document.getElementById('theme-switch')?.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            this.textContent = document.body.classList.contains('dark-mode') ? '🌙 Dark Mode' : '☀️ Light Mode';
+        });
+
+        // 19. Cookie Consent
+        document.getElementById('accept-cookies')?.addEventListener('click', function() {
+            document.getElementById('cookie-banner').style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        });
+        if(localStorage.getItem('cookiesAccepted') === 'true') {
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+
+        // 12. Queue Panel Toggle
+        document.getElementById('btn-queue')?.addEventListener('click', () => {
+            document.getElementById('queue-panel').classList.add('open');
+        });
+        document.getElementById('close-queue')?.addEventListener('click', () => {
+            document.getElementById('queue-panel').classList.remove('open');
+        });
+
+        // 13. Lyrics Modal Toggle (You can add a lyrics button to player later)
+        document.getElementById('close-lyrics')?.addEventListener('click', () => {
+            document.getElementById('lyrics-modal').style.display = 'none';
+        });
+
+        // 18. Keyboard Shortcuts (Example)
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+                document.getElementById('queue-panel')?.classList.remove('open');
+            }
+        });
+    </script>
+
+</body>
+</html>
