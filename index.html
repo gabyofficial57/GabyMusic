@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,16 +10,51 @@
 
     <title>GABY MUSIC | Your Music. Your World.</title>
 
+    <!-- 21. PWA SUPPORT (Gushyira kuri telefoni nka App) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dark-mode">
+
+    <!-- 1. PRELOADER (Urupapuro rwo gutegereza) -->
+    <div id="preloader">
+        <div class="loader">🎵</div>
+        <p>Loading GABY MUSIC...</p>
+    </div>
+
+    <!-- 2. SCROLL PROGRESS BAR -->
+    <div id="scroll-progress"></div>
+
+    <!-- 3. TOAST NOTIFICATIONS CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- 20. SCROLL TO TOP BUTTON -->
+    <button id="scroll-top-btn" aria-label="Scroll to top">⬆</button>
+
+    <!-- 19. COOKIE CONSENT BANNER -->
+    <div id="cookie-banner">
+        <p>🍪 We use cookies to improve your experience.</p>
+        <button id="accept-cookies">Accept</button>
+    </div>
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="sidebar-logo">
             🎵 GABY MUSIC
+        </div>
+
+        <!-- 5. USER PROFILE -->
+        <div class="user-profile">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <p class="user-name">Guest User</p>
+                <p class="user-status">Free Plan</p>
+            </div>
         </div>
 
         <p class="sidebar-heading">MENU</p>
@@ -40,6 +74,11 @@
             <a href="#add-song">➕ Add Music</a>
         </nav>
 
+        <!-- 4. DARK/LIGHT MODE TOGGLE -->
+        <div class="theme-toggle">
+            <button id="theme-switch" type="button">🌙 Dark Mode</button>
+        </div>
+
         <div class="sidebar-bottom">
             <p>GABY MUSIC</p>
             <small>Your Music. Your World.</small>
@@ -55,6 +94,10 @@
         <header class="header">
 
             <div>
+                <!-- 22. BREADCRUMBS -->
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <a href="#home">Home</a> <span>/</span> <span>Dashboard</span>
+                </nav>
                 <h2>Welcome to GABY MUSIC</h2>
                 <p>Your personal music collection</p>
             </div>
@@ -84,6 +127,26 @@
 
             </div>
 
+            <!-- 6. QUICK STATS -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <h3 id="stat-songs">0</h3>
+                    <p>Total Songs</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-artists">0</h3>
+                    <p>Artists</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-genres">9</h3>
+                    <p>Genres</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-plays">0</h3>
+                    <p>Total Plays</p>
+                </div>
+            </div>
+
         </section>
 
 
@@ -111,254 +174,4 @@
 
             <p>Add your favourite MP3 music to your collection.</p>
 
-            <form id="add-song-form">
-
-                <label for="song-title">Song Title</label>
-
-                <input
-                    type="text"
-                    id="song-title"
-                    placeholder="Enter song title"
-                    required
-                >
-
-                <label for="song-category">Music Category</label>
-
-                <select id="song-category" required>
-
-                    <option value="Rwandan Music">Rwandan Music</option>
-                    <option value="Gospel">Gospel</option>
-                    <option value="Hip Hop">Hip Hop</option>
-                    <option value="Afrobeat">Afrobeat</option>
-                    <option value="Amapiano">Amapiano</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Electronic">Electronic</option>
-                    <option value="Jazz">Jazz</option>
-                    <option value="Rock">Rock</option>
-
-                </select>
-
-                <label for="song-audio">Choose MP3 Music</label>
-
-                <input
-                    type="file"
-                    id="song-audio"
-                    accept="audio/mpeg,audio/mp3,audio/*"
-                    required
-                >
-
-                <label for="song-image">Choose Song Cover</label>
-
-                <input
-                    type="file"
-                    id="song-image"
-                    accept="image/*"
-                    required
-                >
-
-                <button type="submit">
-                    Add Song
-                </button>
-
-            </form>
-
-        </section>
-
-
-        <!-- TRENDING SECTION -->
-        <section id="trending">
-
-            <div class="section-heading">
-
-                <h2>🔥 Trending Music</h2>
-
-                <p>
-                    Discover music you might enjoy.
-                </p>
-
-            </div>
-
-            <div id="trending-songs"></div>
-
-        </section>
-
-
-        <!-- ALL MUSIC -->
-        <section id="music">
-
-            <div class="section-heading">
-
-                <h2>🎵 All Music</h2>
-
-                <p>
-                    Explore all songs in your music library.
-                </p>
-
-            </div>
-
-
-            <!-- CATEGORY FILTER -->
-            <select id="category-filter">
-
-                <option value="All">All Music</option>
-
-                <option value="Rwandan Music">Rwandan Music</option>
-
-                <option value="Gospel">Gospel</option>
-
-                <option value="Hip Hop">Hip Hop</option>
-
-                <option value="Afrobeat">Afrobeat</option>
-
-                <option value="Amapiano">Amapiano</option>
-
-                <option value="Pop">Pop</option>
-
-                <option value="Electronic">Electronic</option>
-
-                <option value="Jazz">Jazz</option>
-
-                <option value="Rock">Rock</option>
-
-                <option value="GitHub Music">GitHub Music</option>
-
-            </select>
-
-
-            <!-- SONGS WILL APPEAR HERE -->
-            <div id="music-list"></div>
-
-        </section>
-
-
-        <!-- RECENTLY ADDED -->
-        <section id="recently-added">
-
-            <div class="section-heading">
-
-                <h2>🕒 Recently Added Songs</h2>
-
-                <p>
-                    Listen to the latest songs added to your library.
-                </p>
-
-            </div>
-
-            <div id="recent-songs"></div>
-
-        </section>
-
-
-        <!-- ABOUT SECTION -->
-        <section id="about">
-
-            <div class="section-heading">
-
-                <h2>ℹ️ About GABY MUSIC</h2>
-
-            </div>
-
-            <p>
-                GABY MUSIC is your personal music platform.
-                Discover your favourite music, explore different
-                genres, add songs, organize your collection,
-                play and download music.
-            </p>
-
-            <p>
-                Your Music. Your World.
-            </p>
-
-        </section>
-
-
-        <!-- FOOTER -->
-        <footer class="footer">
-
-            <h3>🎵 GABY MUSIC</h3>
-
-            <p>Your Music. Your World.</p>
-
-            <p>
-                © 2026 GABY MUSIC. All rights reserved.
-            </p>
-
-        </footer>
-
-    </main>
-
-
-    <!-- NOW PLAYING BAR -->
-    <div id="now-playing-bar">
-
-        <div class="now-playing-info">
-
-            <img
-                id="now-playing-image"
-                src="images/cover1.jpg"
-                alt="Song cover"
-            >
-
-            <div class="now-playing-details">
-
-                <h4 id="now-playing-title">
-                    No song playing
-                </h4>
-
-                <p>GABY MUSIC</p>
-
-                <!-- MUSIC VISUALIZER -->
-                <div id="music-visualizer">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PLAYER CONTROLS -->
-        <div class="player-controls">
-
-            <button
-                id="play-pause-button"
-                type="button"
-                aria-label="Play or pause music"
-            >
-                ▶
-            </button>
-
-            <span id="current-time">0:00</span>
-
-            <input
-                type="range"
-                id="song-progress"
-                value="0"
-                min="0"
-                max="100"
-                aria-label="Song progress"
-            >
-
-            <span id="total-time">0:00</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- JAVASCRIPT -->
-    <script src="script.js"></script>
-
-</body>
-</html>
+            <form id="add
