@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color" content="#10101a">
+    <meta name="description" content="GABY MUSIC - Your Music. Your World. Discover, play and enjoy your favourite music.">
+
     <title>GABY MUSIC | Your Music. Your World.</title>
 
     <link rel="stylesheet" href="style.css">
@@ -25,6 +28,7 @@
         <nav class="sidebar-nav">
             <a href="#home" class="active">🏠 Home</a>
             <a href="#music">🎧 My Music</a>
+            <a href="#trending">🔥 Trending</a>
             <a href="#about">ℹ️ About</a>
         </nav>
 
@@ -49,10 +53,12 @@
 
         <!-- HEADER -->
         <header class="header">
+
             <div>
                 <h2>Welcome to GABY MUSIC</h2>
                 <p>Your personal music collection</p>
             </div>
+
         </header>
 
 
@@ -60,7 +66,10 @@
         <section class="welcome" id="home">
 
             <div class="welcome-content">
-                <p class="welcome-label">WELCOME TO YOUR MUSIC WORLD</p>
+
+                <p class="welcome-label">
+                    WELCOME TO YOUR MUSIC WORLD
+                </p>
 
                 <h1>Feel The Music 🎧</h1>
 
@@ -72,6 +81,7 @@
                 <a href="#music" class="hero-button">
                     Explore Music
                 </a>
+
             </div>
 
         </section>
@@ -84,9 +94,10 @@
                 type="text"
                 id="search-input"
                 placeholder="Search your favourite songs..."
+                aria-label="Search songs"
             >
 
-            <button id="search-button">
+            <button id="search-button" type="button">
                 Search
             </button>
 
@@ -114,10 +125,17 @@
                 <label for="song-category">Music Category</label>
 
                 <select id="song-category" required>
+
                     <option value="Rwandan Music">Rwandan Music</option>
                     <option value="Gospel">Gospel</option>
                     <option value="Hip Hop">Hip Hop</option>
                     <option value="Afrobeat">Afrobeat</option>
+                    <option value="Amapiano">Amapiano</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Electronic">Electronic</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Rock">Rock</option>
+
                 </select>
 
                 <label for="song-audio">Choose MP3 Music</label>
@@ -147,27 +165,67 @@
         </section>
 
 
+        <!-- TRENDING SECTION -->
+        <section id="trending">
+
+            <div class="section-heading">
+
+                <h2>🔥 Trending Music</h2>
+
+                <p>
+                    Discover music you might enjoy.
+                </p>
+
+            </div>
+
+            <div id="trending-songs"></div>
+
+        </section>
+
+
         <!-- ALL MUSIC -->
         <section id="music">
 
             <div class="section-heading">
+
                 <h2>🎵 All Music</h2>
 
                 <p>
                     Explore all songs in your music library.
                 </p>
+
             </div>
 
+
+            <!-- CATEGORY FILTER -->
             <select id="category-filter">
 
                 <option value="All">All Music</option>
+
                 <option value="Rwandan Music">Rwandan Music</option>
+
                 <option value="Gospel">Gospel</option>
+
                 <option value="Hip Hop">Hip Hop</option>
+
                 <option value="Afrobeat">Afrobeat</option>
+
+                <option value="Amapiano">Amapiano</option>
+
+                <option value="Pop">Pop</option>
+
+                <option value="Electronic">Electronic</option>
+
+                <option value="Jazz">Jazz</option>
+
+                <option value="Rock">Rock</option>
+
+                <option value="GitHub Music">GitHub Music</option>
 
             </select>
 
+
+            <!-- SONGS WILL APPEAR HERE -->
             <div id="music-list"></div>
 
         </section>
@@ -177,11 +235,13 @@
         <section id="recently-added">
 
             <div class="section-heading">
+
                 <h2>🕒 Recently Added Songs</h2>
 
                 <p>
                     Listen to the latest songs added to your library.
                 </p>
+
             </div>
 
             <div id="recent-songs"></div>
@@ -193,13 +253,16 @@
         <section id="about">
 
             <div class="section-heading">
+
                 <h2>ℹ️ About GABY MUSIC</h2>
+
             </div>
 
             <p>
                 GABY MUSIC is your personal music platform.
-                Add your favourite songs, organize them into
-                categories, play them and download your music.
+                Discover your favourite music, explore different
+                genres, add songs, organize your collection,
+                play and download music.
             </p>
 
             <p>
@@ -236,32 +299,43 @@
                 alt="Song cover"
             >
 
-            <div>
+            <div class="now-playing-details">
+
                 <h4 id="now-playing-title">
-                    <div id="music-visualizer">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
                     No song playing
                 </h4>
 
                 <p>GABY MUSIC</p>
+
+                <!-- MUSIC VISUALIZER -->
+                <div id="music-visualizer">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
             </div>
 
         </div>
 
 
+        <!-- PLAYER CONTROLS -->
         <div class="player-controls">
 
-            <button id="play-pause-button" type="button">
+            <button
+                id="play-pause-button"
+                type="button"
+                aria-label="Play or pause music"
+            >
                 ▶
             </button>
 
