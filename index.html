@@ -5,18 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gaby Music | Official</title>
 <style>
+    /* =========================================
+       1. SINGLE COLOR MODE (MONOCHROME THEME)
+       ========================================= */
     :root {
         --bg-primary: #050505;
         --bg-secondary: #111111;
         --bg-tertiary: #1a1a1a;
         --text-primary: #ffffff;
         --text-secondary: #888888;
-        --accent: #ffffff;
+        --accent: #ffffff; /* Ibara rimwe ry'umweru gusa */
         --glass-bg: rgba(255, 255, 255, 0.03);
         --glass-border: rgba(255, 255, 255, 0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* 20. Smooth Scroll */
     html { scroll-behavior: smooth; }
 
     body {
@@ -24,19 +29,10 @@
         background-color: var(--bg-primary);
         color: var(--text-primary);
         overflow-x: hidden;
-        cursor: none;
+        cursor: none; /* 1. Custom Cursor */
     }
 
-    /* 🆕 LIVE ANIMATED BACKGROUND */
-    #particle-canvas {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    /* Custom Cursor */
+    /* 1. Custom Cursor */
     .cursor-dot, .cursor-outline {
         position: fixed;
         top: 0; left: 0;
@@ -48,7 +44,7 @@
     .cursor-dot { width: 8px; height: 8px; background: var(--accent); }
     .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); transition: transform 0.1s ease; }
 
-    /* Preloader */
+    /* 9 & 21. Preloader & Loading Bar */
     .preloader {
         position: fixed; inset: 0;
         background: var(--bg-primary);
@@ -66,12 +62,12 @@
     }
     @keyframes loadAnim { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-    /* Navbar */
+    /* 4. Minimalist Navbar */
     nav {
         position: fixed; top: 0; width: 100%; padding: 20px 50px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 100;
-        background: rgba(5, 5, 5, 0.6);
+        background: rgba(5, 5, 5, 0.8);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--glass-border);
     }
@@ -79,14 +75,15 @@
     .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 30px; font-size: 0.9rem; transition: color 0.3s; }
     .nav-links a:hover { color: var(--accent); }
 
-    /* Hero */
+    /* 5 & 11. Hero Section & Text Reveal */
     .hero {
         height: 100vh; display: flex; align-items: center; justify-content: center;
         flex-direction: column; text-align: center; position: relative;
     }
     .hero h1 {
         font-size: 8rem; font-weight: 900; letter-spacing: -5px;
-        line-height: 1; overflow: hidden;
+        line-height: 1;
+        overflow: hidden;
     }
     .hero h1 span {
         display: inline-block;
@@ -96,6 +93,7 @@
     .hero h1 span:nth-child(2) { animation-delay: 0.2s; }
     @keyframes revealText { to { transform: translateY(0); } }
 
+    /* 19. Typewriter Effect */
     .typewriter {
         font-size: 1.2rem; color: var(--text-secondary); margin-top: 20px;
         border-right: 2px solid var(--accent);
@@ -106,16 +104,15 @@
     @keyframes typing { to { width: 280px; } }
     @keyframes blink { 50% { border-color: transparent; } }
 
-    /* Scroll Fade-In */
+    /* 13. Scroll Fade-In */
     .fade-section {
         opacity: 0; transform: translateY(50px);
         transition: opacity 0.8s ease, transform 0.8s ease;
         padding: 100px 50px;
-        position: relative;
     }
     .fade-section.visible { opacity: 1; transform: translateY(0); }
 
-    /* Albums */
+    /* 2 & 17. Glassmorphism & 3D Tilt Cards */
     .albums-grid {
         display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 30px; max-width: 1200px; margin: 0 auto;
@@ -129,6 +126,7 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         transform-style: preserve-3d;
     }
+    /* 14. Hover Glow & Scale */
     .album-card:hover {
         box-shadow: 0 10px 30px rgba(255,255,255,0.1);
         transform: scale(1.02);
@@ -141,7 +139,7 @@
         font-size: 3rem; color: var(--text-secondary);
     }
 
-    /* Marquee */
+    /* 16. Infinite Marquee */
     .marquee-container { overflow: hidden; padding: 50px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
     .marquee-content {
         display: flex; gap: 50px; width: max-content;
@@ -150,7 +148,7 @@
     .marquee-content span { font-size: 3rem; font-weight: 800; color: var(--text-secondary); white-space: nowrap; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* Music Player */
+    /* 3 & 15. Fixed Music Player & Audio Visualizer */
     .music-player {
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
         background: rgba(20, 20, 20, 0.9);
@@ -171,7 +169,7 @@
     .visualizer span:nth-child(4) { animation-delay: 0.1s; height: 20px; }
     @keyframes vizAnim { to { height: 5px; } }
 
-    /* Magnetic Button */
+    /* 18. Magnetic Buttons */
     .magnetic-btn {
         padding: 15px 40px; background: transparent; border: 1px solid var(--accent);
         color: var(--accent); font-size: 1rem; letter-spacing: 2px;
@@ -184,20 +182,17 @@
 </head>
 <body>
 
-<!-- 🆕 LIVE ANIMATED BACKGROUND CANVAS -->
-<canvas id="particle-canvas"></canvas>
-
-<!-- Preloader -->
+<!-- 9. Preloader -->
 <div class="preloader" id="preloader">
     <h2>GABY MUSIC</h2>
     <div class="loading-bar"></div>
 </div>
 
-<!-- Custom Cursor -->
+<!-- 1. Custom Cursor -->
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-outline" id="cursor-outline"></div>
 
-<!-- Navbar -->
+<!-- 4. Navbar -->
 <nav>
     <div class="logo">GABY</div>
     <div class="nav-links">
@@ -208,13 +203,13 @@
     </div>
 </nav>
 
-<!-- Hero -->
+<!-- 5 & 11 & 19. Hero Section -->
 <section class="hero" id="home">
     <h1><span>GABY</span> <span>MUSIC</span></h1>
     <p class="typewriter">Experience the sound of tomorrow...</p>
 </section>
 
-<!-- Marquee -->
+<!-- 16. Marquee -->
 <div class="marquee-container">
     <div class="marquee-content">
         <span>NEW ALBUM OUT NOW ★</span>
@@ -224,7 +219,7 @@
     </div>
 </div>
 
-<!-- Albums -->
+<!-- 2 & 17. Albums Section -->
 <section class="fade-section" id="music">
     <h2 style="text-align: center; margin-bottom: 50px; font-size: 3rem;">LATEST RELEASES</h2>
     <div class="albums-grid">
@@ -246,7 +241,7 @@
     </div>
 </section>
 
-<!-- Contact -->
+<!-- 18. Magnetic Button Section -->
 <section class="fade-section" id="contact" style="text-align: center;">
     <h2 style="margin-bottom: 30px;">JOIN THE JOURNEY</h2>
     <button class="magnetic-btn" id="magnetic-btn">LISTEN NOW</button>
@@ -256,7 +251,7 @@
     <p>&copy; 2026 Gaby Music. All Rights Reserved.</p>
 </footer>
 
-<!-- Music Player -->
+<!-- 3 & 15. Fixed Music Player -->
 <div class="music-player">
     <div class="visualizer">
         <span></span><span></span><span></span><span></span>
@@ -265,132 +260,14 @@
 </div>
 
 <script>
-    // ============================================
-    // 🆕 LIVE ANIMATED PARTICLE BACKGROUND
-    // ============================================
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: null, y: null, radius: 150 };
-
-    // Resize canvas
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Track mouse
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-    });
-
-    // Particle class
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 0.5;
-            this.baseX = this.x;
-            this.baseY = this.y;
-            this.density = (Math.random() * 30) + 1;
-            this.speedX = (Math.random() - 0.5) * 0.5;
-            this.speedY = (Math.random() - 0.5) * 0.5;
-        }
-
-        update() {
-            // Gentle floating movement
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            // Bounce off edges
-            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-            // Mouse interaction - particles move away from cursor
-            if (mouse.x != null && mouse.y != null) {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    let forceDirectionX = dx / distance;
-                    let forceDirectionY = dy / distance;
-                    let maxDistance = mouse.radius;
-                    let force = (maxDistance - distance) / maxDistance;
-                    let directionX = (forceDirectionX * force * this.density);
-                    let directionY = (forceDirectionY * force * this.density);
-                    this.x -= directionX;
-                    this.y -= directionY;
-                }
-            }
-        }
-
-        draw() {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-        }
-    }
-
-    // Create particles
-    function initParticles() {
-        particles = [];
-        let numberOfParticles = Math.min((canvas.width * canvas.height) / 9000, 150);
-        for (let i = 0; i < numberOfParticles; i++) {
-            particles.push(new Particle());
-        }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
-
-    // Connect particles with lines
-    function connectParticles() {
-        for (let a = 0; a < particles.length; a++) {
-            for (let b = a; b < particles.length; b++) {
-                let dx = particles[a].x - particles[b].x;
-                let dy = particles[a].y - particles[b].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 120) {
-                    let opacity = 1 - (distance / 120);
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[a].x, particles[a].y);
-                    ctx.lineTo(particles[b].x, particles[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    // Animation loop
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-        }
-        connectParticles();
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    // ============================================
-    // OTHER ANIMATIONS
-    // ============================================
-
-    // Hide Preloader
+    // 9. Hide Preloader
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.getElementById('preloader').classList.add('hidden');
         }, 1500);
     });
 
-    // Custom Cursor
+    // 1. Custom Cursor Logic
     const dot = document.getElementById('cursor-dot');
     const outline = document.getElementById('cursor-outline');
     let mouseX = 0, mouseY = 0;
@@ -402,6 +279,7 @@
         dot.style.top = mouseY + 'px';
     });
 
+    // Smooth follow for outline
     function animateCursor() {
         outlineX += (mouseX - outlineX) * 0.15;
         outlineY += (mouseY - outlineY) * 0.15;
@@ -411,7 +289,7 @@
     }
     animateCursor();
 
-    // Scroll Fade-In
+    // 13. Scroll Fade-In (Intersection Observer)
     const faders = document.querySelectorAll('.fade-section');
     const appearOptions = { threshold: 0.15 };
     const appearObserver = new IntersectionObserver((entries, observer) => {
@@ -423,7 +301,7 @@
     }, appearOptions);
     faders.forEach(fader => appearObserver.observe(fader));
 
-    // 3D Tilt Effect
+    // 17. 3D Tilt Effect on Album Cards
     document.querySelectorAll('[data-tilt]').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -440,7 +318,7 @@
         });
     });
 
-    // Magnetic Button
+    // 18. Magnetic Button Effect
     const magBtn = document.getElementById('magnetic-btn');
     magBtn.addEventListener('mousemove', (e) => {
         const rect = magBtn.getBoundingClientRect();
