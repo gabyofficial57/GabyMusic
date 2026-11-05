@@ -1,856 +1,1200 @@
-"use strict";
-
 /* =========================================
-   GABY MUSIC - MAIN JAVASCRIPT (FULL & COMPLETE)
+   GABY MUSIC - FULL STYLESHEET
    ========================================= */
 
-// GITHUB REPOSITORY
-const GITHUB_API = "https://api.github.com/repos/gabyofficial57/GabyMusic/contents";
+/* 1. CSS VARIABLES (THEMING) */
+:root {
+    --bg-primary: #10101a;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #252542;
+    --accent: #8a2be2;
+    --accent-hover: #9d4edd;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --border-color: rgba(138, 43, 226, 0.2);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --radius: 12px;
+    --transition: all 0.3s ease;
+}
 
-// DEFAULT SONGS
-const defaultSongs = [
-    {
-        title: "Diez Dola - ONIVA Ft The Ben",
-        file: "music/Diez Dola - ONIVA Ft The Ben (Official Music Video) [aHmE4QmI5zA].mp3",
-        image: "images/cover1.jpg",
-        category: "Rwandan Music"
-    },
-    {
-        title: "Element Eleéeh - MY DEAR",
-        file: "music/Element Eleéeh - MY DEAR (Lyric Video) [g0dNcA7c188].mp3",
-        image: "images/cover2.jpg",
-        category: "Afrobeat"
+/* Light Mode Variables */
+body.light-mode {
+    --bg-primary: #f4f4f9;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e8e8f0;
+    --text-primary: #1a1a2e;
+    --text-secondary: #555566;
+    --border-color: rgba(138, 43, 226, 0.15);
+    --shadow: 0 8px 32px rgba(138, 43, 226, 0.1);
+}
+
+/* 2. RESET & BASE STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: var(--transition);
+    padding-bottom: 100px; /* Space for now playing bar */
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    outline: none;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    outline: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+/* 3. PRELOADER */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.loader {
+    font-size: 4rem;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* 4. SCROLL PROGRESS BAR */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), #4169e1);
+    width: 0%;
+    z-index: 9998;
+    transition: width 0.1s linear;
+}
+
+/* 5. TOAST NOTIFICATIONS */
+#toast-container {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 9997;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--accent);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    animation: slideIn 0.4s ease forwards;
+    font-weight: 500;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* 6. SCROLL TO TOP BUTTON */
+#scroll-top-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: none;
+    z-index: 9994;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+    transition: var(--transition);
+}
+
+#scroll-top-btn:hover {
+    transform: translateY(-3px);
+    background: var(--accent-hover);
+}
+
+/* 7. COOKIE BANNER */
+#cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: var(--bg-secondary);
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9996;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#accept-cookies {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+#accept-cookies:hover {
+    background: var(--accent-hover);
+}
+
+/* 8. SIDEBAR */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+}
+
+.user-avatar {
+    font-size: 2rem;
+    background: var(--accent);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-info .user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.user-info .user-status {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin: 20px 0 10px 12px;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: rgba(138, 43, 226, 0.15);
+    color: var(--accent);
+}
+
+.theme-toggle button {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-top: auto;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.theme-toggle button:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.sidebar-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* 9. MAIN CONTENT */
+.main-content {
+    margin-left: 260px;
+    padding: 30px 40px;
+    transition: var(--transition);
+}
+
+/* 10. HEADER & BREADCRUMBS */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.breadcrumbs {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.breadcrumbs a {
+    color: var(--text-secondary);
+}
+
+.breadcrumbs a:hover {
+    color: var(--accent);
+}
+
+.header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+/* 11. HERO SECTION */
+.welcome {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(13, 27, 62, 0.4) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 50px 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.welcome-label {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.welcome h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.welcome p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-bottom: 25px;
+}
+
+.hero-button {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.hero-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
+    color: white;
+}
+
+/* Quick Stats */
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: var(--radius);
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.stat-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* 12. SEARCH SECTION */
+.search-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.search-section input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+}
+
+.search-section button {
+    padding: 14px 24px;
+    background: var(--accent);
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.search-section button:hover {
+    background: var(--accent-hover);
+}
+
+/* 13. FORMS (Add Song, Newsletter, Contact) */
+.add-song, .newsletter, .contact {
+    background: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.add-song h2, .newsletter h2, .contact h2 {
+    margin-bottom: 10px;
+}
+
+.add-song p, .newsletter p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 500px;
+}
+
+form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+form input, form select, form textarea {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    border-color: var(--accent);
+}
+
+form button[type="submit"] {
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: var(--transition);
+}
+
+form button[type="submit"]:hover {
+    background: var(--accent-hover);
+}
+
+/* 14. SECTION HEADINGS & FILTERS */
+.section-heading {
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.section-heading p {
+    color: var(--text-secondary);
+}
+
+.mood-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.mood-pill {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mood-pill:hover, .mood-pill.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+#category-filter {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+/* 15. SONG CARDS & GRIDS */
+#music-list, #trending-songs, #recent-songs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.song {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+}
+
+.song:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(138, 43, 226, 0.15);
+    border-color: var(--accent);
+}
+
+.song .cover {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.song h3 {
+    padding: 16px 16px 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song .song-artist, .song p {
+    padding: 0 16px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.song-actions {
+    padding: 0 16px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.song-actions button, .song-actions a {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.song-actions button:first-child {
+    background: var(--accent);
+    color: white;
+}
+
+.song-actions button:first-child:hover {
+    background: var(--accent-hover);
+}
+
+.song-actions a {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.song-actions a:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.song-actions .edit-song, .song-actions .delete-song {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.song-actions .edit-song:hover {
+    border-color: #3498db;
+    color: #3498db;
+}
+
+.song-actions .delete-song:hover {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+/* Recent Songs Compact View */
+#recent-songs .recent-song {
+    background: var(--bg-secondary);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+#recent-songs .recent-song p {
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+#recent-songs .recent-song button {
+    background: var(--accent);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* 16. FEATURED ARTIST */
+.featured-artist {
+    margin-bottom: 40px;
+}
+
+.featured-content {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.featured-image {
+    font-size: 5rem;
+    background: var(--bg-primary);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--accent);
+}
+
+.featured-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.featured-info p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    max-width: 500px;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.btn-outline:hover {
+    background: var(--accent);
+    color: white;
+}
+
+/* 17. TESTIMONIALS & FAQ */
+.testimonials, .faq {
+    margin-bottom: 40px;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.testimonial-card {
+    background: var(--bg-secondary);
+    padding: 24px;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--accent);
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.testimonial-card span {
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.faq-list details {
+    background: var(--bg-secondary);
+    margin-bottom: 12px;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.faq-list summary {
+    font-weight: 700;
+    color: var(--text-primary);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-list summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.faq-list details[open] summary::after {
+    content: '-';
+}
+
+.faq-list details p {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 18. FOOTER */
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 60px;
+    color: var(--text-secondary);
+}
+
+.footer h3 {
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+/* 19. NOW PLAYING BAR */
+#now-playing-bar {
+    position: fixed;
+    bottom: 0;
+    left: 260px;
+    right: 0;
+    height: 90px;
+    background: rgba(16, 16, 26, 0.95);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 900;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode #now-playing-bar {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.now-playing-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 250px;
+}
+
+.now-playing-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
+
+.now-playing-details h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.now-playing-details p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Visualizer Animation */
+#music-visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+    margin-top: 8px;
+}
+
+#music-visualizer span {
+    display: block;
+    width: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    height: 5px;
+}
+
+#music-visualizer.playing span {
+    animation: visualize 0.8s ease-in-out infinite;
+}
+
+#music-visualizer.playing span:nth-child(2) { animation-delay: 0.1s; }
+#music-visualizer.playing span:nth-child(3) { animation-delay: 0.2s; }
+#music-visualizer.playing span:nth-child(4) { animation-delay: 0.3s; }
+#music-visualizer.playing span:nth-child(5) { animation-delay: 0.4s; }
+#music-visualizer.playing span:nth-child(6) { animation-delay: 0.5s; }
+#music-visualizer.playing span:nth-child(7) { animation-delay: 0.6s; }
+#music-visualizer.playing span:nth-child(8) { animation-delay: 0.7s; }
+
+@keyframes visualize {
+    0%, 100% { height: 5px; }
+    50% { height: 20px; }
+}
+
+/* Player Controls */
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    justify-content: center;
+    max-width: 600px;
+}
+
+.player-controls button {
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.player-controls button:hover {
+    background: var(--bg-tertiary);
+    color: var(--accent);
+}
+
+#play-pause-button {
+    background: var(--accent) !important;
+    color: white !important;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+}
+
+#play-pause-button:hover {
+    background: var(--accent-hover) !important;
+    transform: scale(1.05);
+}
+
+.time-display {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    min-width: 45px;
+    text-align: center;
+}
+
+#song-progress {
+    flex: 1;
+    height: 5px;
+    -webkit-appearance: none;
+    background: var(--bg-tertiary);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#song-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#song-progress::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+.queue-toggle {
+    position: absolute;
+    right: 30px;
+}
+
+/* 20. SIDE PANELS & MODALS */
+.side-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 380px;
+    height: 100vh;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border-color);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 950;
+    padding: 24px;
+    overflow-y: auto;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.side-panel.open {
+    right: 0;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel-header button {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    padding: 32px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    animation: modalPop 0.3s ease;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shortcuts-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.shortcuts-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shortcuts-list kbd {
+    background: var(--bg-tertiary);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: monospace;
+    border: 1px solid var(--border-color);
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* 21. RESPONSIVE DESIGN (MOBILE & TABLET) */
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
     }
-];
-
-// CATEGORIES
-const categories = ["Rwandan Music", "Gospel", "Hip Hop", "Afrobeat", "Amapiano", "Pop", "Electronic", "Jazz", "Rock"];
-
-// HTML ELEMENTS (Existing)
-const musicList = document.getElementById("music-list");
-const searchInput = document.getElementById("search-input");
-const searchButton = document.getElementById("search-button");
-const categoryFilter = document.getElementById("category-filter");
-const addSongForm = document.getElementById("add-song-form");
-const songTitle = document.getElementById("song-title");
-const songCategory = document.getElementById("song-category");
-const songAudio = document.getElementById("song-audio");
-const songImage = document.getElementById("song-image");
-const recentSongsContainer = document.getElementById("recent-songs");
-const trendingContainer = document.getElementById("trending-songs");
-const nowPlayingTitle = document.getElementById("now-playing-title");
-const nowPlayingImage = document.getElementById("now-playing-image");
-const playPauseButton = document.getElementById("play-pause-button");
-const songProgress = document.getElementById("song-progress");
-const currentTimeDisplay = document.getElementById("current-time");
-const totalTimeDisplay = document.getElementById("total-time");
-const visualizer = document.getElementById("music-visualizer");
-
-// HTML ELEMENTS (NEW FEATURES)
-const preloader = document.getElementById("preloader");
-const scrollProgress = document.getElementById("scroll-progress");
-const scrollTopBtn = document.getElementById("scroll-top-btn");
-const themeSwitch = document.getElementById("theme-switch");
-const cookieBanner = document.getElementById("cookie-banner");
-const acceptCookiesBtn = document.getElementById("accept-cookies");
-const btnShuffle = document.getElementById("btn-shuffle");
-const btnRepeat = document.getElementById("btn-repeat");
-const btnLike = document.getElementById("btn-like");
-const btnShare = document.getElementById("btn-share");
-const btnQueue = document.getElementById("btn-queue");
-const queuePanel = document.getElementById("queue-panel");
-const closeQueue = document.getElementById("close-queue");
-const queueList = document.getElementById("queue-list");
-const closeLyrics = document.getElementById("close-lyrics");
-const lyricsModal = document.getElementById("lyrics-modal");
-const closeShortcuts = document.getElementById("close-shortcuts");
-const shortcutsModal = document.getElementById("shortcuts-modal");
-const statSongs = document.getElementById("stat-songs");
-const statArtists = document.getElementById("stat-artists");
-const statPlays = document.getElementById("stat-plays");
-const newsletterForm = document.getElementById("newsletter-form");
-const contactForm = document.getElementById("contact-form");
-const moodPills = document.querySelectorAll(".mood-pill");
-
-// GLOBAL VARIABLES (Existing)
-let savedSongs = [];
-let githubSongs = [];
-let allSongs = [];
-let activeUrls = [];
-let currentAudio = null;
-let currentSong = null;
-
-// GLOBAL VARIABLES (NEW FEATURES)
-let isShuffle = false;
-let repeatMode = 0; // 0: none, 1: all, 2: one
-let playQueue = [];
-let currentQueueIndex = -1;
-let likedSongs = JSON.parse(localStorage.getItem("gaby_liked_songs") || "[]");
-let totalPlays = parseInt(localStorage.getItem("gaby_total_plays") || "0");
-
-
-/* =========================================
-   NEW FEATURE: TOAST NOTIFICATIONS
-   ========================================= */
-function showToast(message, type = "success") {
-    const container = document.getElementById("toast-container");
-    if (!container) return;
     
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    toast.style.background = type === "error" ? "#e74c3c" : "#8a2be2";
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+    }
     
-    container.appendChild(toast);
+    .sidebar.active {
+        transform: translateX(0);
+    }
     
-    setTimeout(() => {
-        toast.style.opacity = "0";
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-
-/* =========================================
-   NEW FEATURE: UPDATE QUICK STATS
-   ========================================= */
-function updateStats() {
-    if (!statSongs) return;
+    #now-playing-bar {
+        left: 0;
+        height: auto;
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
     
-    const uniqueArtists = new Set(allSongs.map(song => {
-        const parts = song.title.split("-");
-        return parts.length > 1 ? parts[0].trim() : "Unknown";
-    }));
+    .now-playing-info {
+        width: 100%;
+        justify-content: center;
+    }
     
-    statSongs.textContent = allSongs.length;
-    statArtists.textContent = uniqueArtists.size;
-    statPlays.textContent = totalPlays.toLocaleString();
-}
-
-
-/* =========================================
-   1. INDEXEDDB DATABASE
-   ========================================= */
-function openDatabase() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open("GabyMusicDB", 2);
-        request.onupgradeneeded = event => {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains("songs")) {
-                db.createObjectStore("songs", { keyPath: "id", autoIncrement: true });
-            }
-            if (!db.objectStoreNames.contains("settings")) {
-                db.createObjectStore("settings");
-            }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-async function loadSavedSongs() {
-    const db = await openDatabase();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction("songs", "readonly");
-        const request = transaction.objectStore("songs").getAll();
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-        transaction.oncomplete = () => db.close();
-    });
-}
-
-async function seedDefaultSongs() {
-    const db = await openDatabase();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(["songs", "settings"], "readwrite");
-        const settings = transaction.objectStore("settings");
-        const songs = transaction.objectStore("songs");
-        const check = settings.get("defaultsAdded");
-        check.onsuccess = () => {
-            if (check.result === true) return;
-            defaultSongs.forEach(song => songs.add(song));
-            settings.put(true, "defaultsAdded");
-        };
-        transaction.oncomplete = () => { db.close(); resolve(); };
-        transaction.onerror = () => { db.close(); reject(transaction.error); };
-    });
-}
-
-async function saveSong(song) {
-    const db = await openDatabase();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction("songs", "readwrite");
-        transaction.objectStore("songs").add(song);
-        transaction.oncomplete = () => { db.close(); resolve(); };
-        transaction.onerror = () => { db.close(); reject(transaction.error); };
-    });
-}
-
-async function updateSong(song) {
-    const db = await openDatabase();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction("songs", "readwrite");
-        transaction.objectStore("songs").put(song);
-        transaction.oncomplete = () => { db.close(); resolve(); };
-        transaction.onerror = () => { db.close(); reject(transaction.error); };
-    });
-}
-
-async function deleteSong(id) {
-    const db = await openDatabase();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction("songs", "readwrite");
-        transaction.objectStore("songs").delete(id);
-        transaction.oncomplete = () => { db.close(); resolve(); };
-        transaction.onerror = () => { db.close(); reject(transaction.error); };
-    });
-}
-
-
-/* =========================================
-   2. LOAD MUSIC FROM GITHUB
-   ========================================= */
-function detectCategory(filename) {
-    const name = filename.toLowerCase();
-    const found = categories.find(category =>
-        name.startsWith(category.toLowerCase() + " -") ||
-        name.startsWith("[" + category.toLowerCase() + "]")
-    );
-    return found || "GitHub Music";
-}
-
-async function loadGitHubSongs() {
-    const response = await fetch(`${GITHUB_API}/music?ref=main`);
-    if (!response.ok) throw new Error("Could not access GitHub music folder.");
-    const files = await response.json();
-    if (!Array.isArray(files)) throw new Error("Invalid GitHub music folder.");
+    .player-controls {
+        width: 100%;
+        max-width: 100%;
+    }
     
-    return files.filter(file => file.type === "file" && /\.(mp3|wav|ogg|m4a|aac)$/i.test(file.name))
-        .map(file => ({
-            id: "github:" + file.name,
-            title: file.name.replace(/\.[^.]+$/, ""),
-            file: file.download_url,
-            image: "images/cover1.jpg",
-            category: detectCategory(file.name),
-            source: "github"
-        }));
-}
-
-async function loadGitHubImages() {
-    try {
-        const response = await fetch(`${GITHUB_API}/images?ref=main`);
-        if (!response.ok) return [];
-        const files = await response.json();
-        return files.filter(file => file.type === "file" && /\.(jpg|jpeg|png|webp)$/i.test(file.name));
-    } catch (error) {
-        console.error("Image loading error:", error);
-        return [];
+    .queue-toggle {
+        position: static;
+    }
+    
+    body {
+        padding-bottom: 160px;
     }
 }
 
-function getGitHubCover(song, images) {
-    if (images.length === 0) return "images/cover1.jpg";
-    const songName = song.title.toLowerCase();
-    const matchingImage = images.find(image => image.name.toLowerCase().includes(songName));
-    return matchingImage ? matchingImage.download_url : images[0].download_url;
-}
-
-
-/* =========================================
-   3. COMBINE MUSIC LIBRARIES
-   ========================================= */
-async function loadAllMusic() {
-    savedSongs = await loadSavedSongs();
-    try {
-        githubSongs = await loadGitHubSongs();
-        const images = await loadGitHubImages();
-        githubSongs.forEach(song => { song.image = getGitHubCover(song, images); });
-    } catch (error) {
-        console.error("GitHub music error:", error);
-        githubSongs = [];
+@media (max-width: 768px) {
+    .welcome h1 {
+        font-size: 2rem;
     }
     
-    const localTitles = new Set(savedSongs.map(song => song.title.toLowerCase().trim()));
-    const uniqueGitHubSongs = githubSongs.filter(song => !localTitles.has(song.title.toLowerCase().trim()));
-    
-    allSongs = [
-        ...savedSongs.map(song => ({ ...song, source: "local" })),
-        ...uniqueGitHubSongs
-    ];
-    
-    updateStats();
-}
-
-
-/* =========================================
-   4. AUDIO AND IMAGE URLS
-   ========================================= */
-function getSongUrl(song, type) {
-    const blob = type === "audio" ? song.audioBlob : song.imageBlob;
-    const file = type === "audio" ? song.file : song.image;
-    if (!blob) return file;
-    if (!song._urls) song._urls = {};
-    if (!song._urls[type]) {
-        song._urls[type] = URL.createObjectURL(blob);
-        activeUrls.push(song._urls[type]);
-    }
-    return song._urls[type];
-}
-
-
-/* =========================================
-   5. FORMAT TIME
-   ========================================= */
-function formatTime(seconds) {
-    if (!Number.isFinite(seconds)) return "0:00";
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-
-/* =========================================
-   6. NOW PLAYING PLAYER
-   ========================================= */
-function updateNowPlaying(song, audio) {
-    currentSong = song;
-    currentAudio = audio;
-    nowPlayingTitle.textContent = song.title;
-    nowPlayingImage.src = getSongUrl(song, "image");
-    playPauseButton.textContent = audio.paused ? "▶" : "Ⅱ";
-    totalTimeDisplay.textContent = formatTime(audio.duration);
-    currentTimeDisplay.textContent = formatTime(audio.currentTime);
-    
-    if (btnLike) {
-        const isLiked = likedSongs.includes(song.title);
-        btnLike.textContent = isLiked ? "❤️" : "🤍";
-    }
-}
-
-
-/* =========================================
-   7. PLAY MUSIC (With Queue/Shuffle/Repeat)
-   ========================================= */
-function playSong(song, fromQueue = false) {
-    const audio = new Audio(getSongUrl(song, "audio"));
-    audio.preload = "metadata";
-    
-    if (currentAudio) currentAudio.pause();
-    
-    currentAudio = audio;
-    currentSong = song;
-    updateNowPlaying(song, audio);
-    
-    totalPlays++;
-    localStorage.setItem("gaby_total_plays", totalPlays.toString());
-    updateStats();
-
-    audio.addEventListener("play", () => {
-        playPauseButton.textContent = "Ⅱ";
-        if (visualizer) visualizer.classList.add("playing");
-    });
-
-    audio.addEventListener("pause", () => {
-        playPauseButton.textContent = "▶";
-        if (visualizer) visualizer.classList.remove("playing");
-    });
-
-    audio.addEventListener("timeupdate", () => {
-        currentTimeDisplay.textContent = formatTime(audio.currentTime);
-        if (Number.isFinite(audio.duration)) {
-            songProgress.value = (audio.currentTime / audio.duration) * 100;
-        }
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-        totalTimeDisplay.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("ended", () => {
-        playPauseButton.textContent = "▶";
-        songProgress.value = 0;
-        if (visualizer) visualizer.classList.remove("playing");
-
-        if (repeatMode === 2) {
-            audio.currentTime = 0;
-            audio.play();
-        } else if (playQueue.length > 0 && currentQueueIndex < playQueue.length - 1) {
-            currentQueueIndex++;
-            playSong(playQueue[currentQueueIndex], true);
-        } else if (repeatMode === 1) {
-            currentQueueIndex = 0;
-            playSong(playQueue[currentQueueIndex], true);
-        } else if (isShuffle) {
-            const randomIndex = Math.floor(Math.random() * allSongs.length);
-            playSong(allSongs[randomIndex]);
-        } else {
-            const currentIndex = allSongs.findIndex(s => s.title === song.title);
-            if (currentIndex < allSongs.length - 1) {
-                playSong(allSongs[currentIndex + 1]);
-            }
-        }
-    });
-
-    audio.addEventListener("error", () => {
-        console.error("Audio could not be played:", song.title);
-        showToast("Could not load this audio file.", "error");
-    });
-
-    audio.play().catch(error => {
-        console.error("Playback error:", error);
-        showToast("Could not play this song. Please try again.", "error");
-    });
-}
-
-
-/* =========================================
-   8. CREATE SONG CARD
-   ========================================= */
-function createSongCard(song) {
-    const card = document.createElement("div");
-    card.className = "song";
-    
-    const image = document.createElement("img");
-    image.src = getSongUrl(song, "image");
-    image.alt = song.title;
-    image.className = "cover";
-    image.onerror = () => { image.src = "images/cover1.jpg"; };
-    
-    const title = document.createElement("h3");
-    title.textContent = song.title;
-    title.className = "song-title";
-    
-    const artist = document.createElement("p");
-    artist.textContent = song.title.split("-")[0].trim();
-    artist.className = "song-artist";
-    
-    const category = document.createElement("p");
-    category.textContent = song.category;
-    
-    const playButton = document.createElement("button");
-    playButton.type = "button";
-    playButton.textContent = "▶ Play";
-    playButton.addEventListener("click", () => {
-        playQueue = allSongs.filter(s => s.category === song.category || true);
-        currentQueueIndex = playQueue.findIndex(s => s.title === song.title);
-        playSong(song);
-    });
-    
-    const download = document.createElement("a");
-    download.href = getSongUrl(song, "audio");
-    download.download = `${song.title}.mp3`;
-    download.textContent = "⬇ Download";
-    download.className = "download-btn";
-    
-    const actions = document.createElement("div");
-    actions.className = "song-actions";
-    actions.append(playButton, download);
-    
-    if (song.source !== "github" && song.id !== undefined) {
-        const editButton = document.createElement("button");
-        editButton.type = "button";
-        editButton.className = "edit-song";
-        editButton.textContent = "Edit";
-        editButton.addEventListener("click", () => editLocalSong(song));
-        
-        const deleteButton = document.createElement("button");
-        deleteButton.type = "button";
-        deleteButton.className = "delete-song";
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", () => removeLocalSong(song));
-        
-        actions.append(editButton, deleteButton);
+    .featured-content {
+        flex-direction: column;
+        text-align: center;
     }
     
-    card.append(image, title, artist, category, actions);
-    return card;
-}
-
-
-/* =========================================
-   9, 10, 11. DISPLAY SONGS, RECENT, TRENDING
-   ========================================= */
-function displaySongs(songArray) {
-    musicList.innerHTML = "";
-    if (songArray.length === 0) {
-        musicList.textContent = "No songs found.";
-        return;
-    }
-    songArray.forEach(song => musicList.appendChild(createSongCard(song)));
-}
-
-function displayRecentSongs() {
-    if (!recentSongsContainer) return;
-    recentSongsContainer.innerHTML = "";
-    const recentSongs = [...allSongs].slice(-5).reverse();
-    if (recentSongs.length === 0) {
-        recentSongsContainer.textContent = "No recent songs yet.";
-        return;
-    }
-    recentSongs.forEach(song => {
-        const item = document.createElement("div");
-        item.className = "recent-song";
-        item.innerHTML = `<p>${song.title}</p><small>${song.category}</small>`;
-        const playButton = document.createElement("button");
-        playButton.textContent = "▶";
-        playButton.type = "button";
-        playButton.addEventListener("click", () => playSong(song));
-        item.appendChild(playButton);
-        recentSongsContainer.appendChild(item);
-    });
-}
-
-function displayTrendingSongs() {
-    if (!trendingContainer) return;
-    trendingContainer.innerHTML = "";
-    const featuredSongs = allSongs.slice(0, 6);
-    if (featuredSongs.length === 0) {
-        trendingContainer.textContent = "No featured music available.";
-        return;
-    }
-    featuredSongs.forEach(song => {
-        const card = createSongCard(song);
-        card.classList.add("trending-song");
-        trendingContainer.appendChild(card);
-    });
-}
-
-
-/* =========================================
-   12. SEARCH AND CATEGORY FILTER
-   ========================================= */
-function filterSongs() {
-    const searchText = searchInput.value.toLowerCase().trim();
-    const selectedCategory = categoryFilter.value;
-    
-    const filteredSongs = allSongs.filter(song => {
-        const matchesSearch = song.title.toLowerCase().includes(searchText);
-        const matchesCategory = selectedCategory === "All" || song.category === selectedCategory;
-        return matchesSearch && matchesCategory;
-    });
-    
-    displaySongs(filteredSongs);
-}
-
-
-/* =========================================
-   13, 14, 15. ADD, EDIT, DELETE
-   ========================================= */
-addSongForm.addEventListener("submit", async event => {
-    event.preventDefault();
-    const audioFile = songAudio.files[0];
-    const imageFile = songImage.files[0];
-    
-    if (!audioFile || !imageFile) { showToast("Choose an MP3 and an image.", "error"); return; }
-    if (!audioFile.type.startsWith("audio/") || !imageFile.type.startsWith("image/")) {
-        showToast("Choose valid audio and image files.", "error"); return;
+    .search-section {
+        flex-direction: column;
     }
     
-    const newSong = {
-        title: songTitle.value.trim(),
-        category: songCategory.value,
-        audioBlob: audioFile,
-        imageBlob: imageFile
-    };
-    
-    if (!newSong.title) { showToast("Enter a song title.", "error"); return; }
-    
-    try {
-        await saveSong(newSong);
-        await loadAllMusic();
-        addSongForm.reset();
-        searchInput.value = "";
-        categoryFilter.value = "All";
-        filterSongs();
-        displayRecentSongs();
-        displayTrendingSongs();
-        showToast("Song added successfully! 🎵");
-    } catch (error) {
-        console.error(error);
-        showToast("Could not save song.", "error");
-    }
-});
-
-async function editLocalSong(song) {
-    const newTitle = prompt("New song title:", song.title);
-    if (newTitle === null || !newTitle.trim()) return;
-    
-    const newCategory = prompt("Choose category: " + categories.join(", "), song.category);
-    if (newCategory === null || !categories.includes(newCategory.trim())) {
-        showToast("Invalid category.", "error"); return;
+    #music-list, #trending-songs {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
     }
     
-    try {
-        song.title = newTitle.trim();
-        song.category = newCategory.trim();
-        await updateSong(song);
-        await loadAllMusic();
-        filterSongs();
-        displayRecentSongs();
-        displayTrendingSongs();
-        showToast("Song updated successfully! ✏️");
-    } catch (error) {
-        console.error(error);
-        showToast("Could not update song.", "error");
+    .quick-stats {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
-
-async function removeLocalSong(song) {
-    if (!confirm(`Delete "${song.title}"?`)) return;
-    try {
-        await deleteSong(song.id);
-        if (currentSong && currentSong.id === song.id) {
-            if (currentAudio) currentAudio.pause();
-            currentAudio = null; currentSong = null;
-            nowPlayingTitle.textContent = "No song playing";
-            nowPlayingImage.src = "images/cover1.jpg";
-            playPauseButton.textContent = "▶";
-            songProgress.value = 0;
-            currentTimeDisplay.textContent = "0:00";
-            totalTimeDisplay.textContent = "0:00";
-        }
-        await loadAllMusic();
-        filterSongs();
-        displayRecentSongs();
-        displayTrendingSongs();
-        showToast("Song deleted successfully! 🗑️");
-    } catch (error) {
-        console.error(error);
-        showToast("Could not delete song.", "error");
-    }
-}
-
-
-/* =========================================
-   16. MAIN PLAYER CONTROLS
-   ========================================= */
-playPauseButton.addEventListener("click", () => {
-    if (!currentAudio) { showToast("First play a song from your collection.", "error"); return; }
-    if (currentAudio.paused) currentAudio.play().catch(e => console.error(e));
-    else currentAudio.pause();
-});
-
-songProgress.addEventListener("input", () => {
-    if (!currentAudio || !Number.isFinite(currentAudio.duration)) return;
-    currentAudio.currentTime = (songProgress.value / 100) * currentAudio.duration;
-});
-
-searchButton.addEventListener("click", filterSongs);
-searchInput.addEventListener("input", filterSongs);
-categoryFilter.addEventListener("change", filterSongs);
-
-
-/* =========================================
-   NEW FEATURES: EVENT LISTENERS & LOGIC
-   ========================================= */
-
-// 1. Preloader
-window.addEventListener("load", () => {
-    if (preloader) preloader.style.display = "none";
-});
-
-// 2. Scroll Progress & Scroll to Top
-window.addEventListener("scroll", () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    if (scrollProgress) scrollProgress.style.width = scrolled + "%";
-    if (scrollTopBtn) scrollTopBtn.style.display = winScroll > 300 ? "block" : "none";
-});
-
-if (scrollTopBtn) {
-    scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-}
-
-// 4. Dark/Light Mode
-if (themeSwitch) {
-    const savedTheme = localStorage.getItem("gaby_theme") || "dark";
-    document.body.classList.add(savedTheme === "dark" ? "dark-mode" : "light-mode");
-    themeSwitch.textContent = savedTheme === "dark" ? "🌙 Dark Mode" : "☀️ Light Mode";
-    
-    themeSwitch.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        document.body.classList.toggle("light-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        themeSwitch.textContent = isDark ? "🌙 Dark Mode" : "☀️ Light Mode";
-        localStorage.setItem("gaby_theme", isDark ? "dark" : "light");
-    });
-}
-
-// 9. Like Button
-if (btnLike) {
-    btnLike.addEventListener("click", () => {
-        if (!currentSong) return;
-        const index = likedSongs.indexOf(currentSong.title);
-        if (index > -1) {
-            likedSongs.splice(index, 1);
-            btnLike.textContent = "🤍";
-            showToast("Removed from favorites");
-        } else {
-            likedSongs.push(currentSong.title);
-            btnLike.textContent = "❤️";
-            showToast("Added to favorites ❤️");
-        }
-        localStorage.setItem("gaby_liked_songs", JSON.stringify(likedSongs));
-    });
-}
-
-// 10. Share Button
-if (btnShare) {
-    btnShare.addEventListener("click", async () => {
-        if (!currentSong) return;
-        const shareData = {
-            title: currentSong.title,
-            text: `Listen to ${currentSong.title} on GABY MUSIC!`,
-            url: window.location.href
-        };
-        if (navigator.share) {
-            try { await navigator.share(shareData); } catch (err) { console.log("Share canceled"); }
-        } else {
-            navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-            showToast("Link copied to clipboard! 📋");
-        }
-    });
-}
-
-// 11. Shuffle & Repeat
-if (btnShuffle) {
-    btnShuffle.addEventListener("click", () => {
-        isShuffle = !isShuffle;
-        btnShuffle.style.color = isShuffle ? "#8a2be2" : "white";
-        showToast(isShuffle ? "Shuffle ON 🔀" : "Shuffle OFF");
-    });
-}
-
-if (btnRepeat) {
-    btnRepeat.addEventListener("click", () => {
-        repeatMode = (repeatMode + 1) % 3;
-        const modes = ["Repeat OFF", "Repeat All 🔁", "Repeat One 🔂"];
-        btnRepeat.textContent = repeatMode === 0 ? "🔁" : (repeatMode === 1 ? "🔁" : "🔂");
-        btnRepeat.style.color = repeatMode > 0 ? "#8a2be2" : "white";
-        showToast(modes[repeatMode]);
-    });
-}
-
-// 12. Queue Panel
-if (btnQueue && queuePanel && closeQueue) {
-    btnQueue.addEventListener("click", () => queuePanel.classList.add("open"));
-    closeQueue.addEventListener("click", () => queuePanel.classList.remove("open"));
-}
-
-// 13. Lyrics Modal
-if (closeLyrics && lyricsModal) {
-    closeLyrics.addEventListener("click", () => lyricsModal.style.display = "none");
-}
-
-// 18. Keyboard Shortcuts
-document.addEventListener("keydown", (e) => {
-    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-    
-    if (e.code === "Space") {
-        e.preventDefault();
-        playPauseButton.click();
-    } else if (e.key.toLowerCase() === "m" && currentAudio) {
-        currentAudio.muted = !currentAudio.muted;
-        showToast(currentAudio.muted ? "Muted 🔇" : "Unmuted 🔊");
-    } else if (e.key.toLowerCase() === "l") {
-        if (btnLike) btnLike.click();
-    } else if (e.key.toLowerCase() === "q") {
-        if (queuePanel) queuePanel.classList.toggle("open");
-    } else if (e.key === "Escape") {
-        if (queuePanel) queuePanel.classList.remove("open");
-        if (lyricsModal) lyricsModal.style.display = "none";
-        if (shortcutsModal) shortcutsModal.style.display = "none";
-    }
-});
-
-// 19. Cookie Consent
-if (cookieBanner && acceptCookiesBtn) {
-    if (localStorage.getItem("gaby_cookies_accepted") === "true") {
-        cookieBanner.style.display = "none";
-    }
-    acceptCookiesBtn.addEventListener("click", () => {
-        cookieBanner.style.display = "none";
-        localStorage.setItem("gaby_cookies_accepted", "true");
-    });
-}
-
-// Newsletter & Contact Forms
-if (newsletterForm) {
-    newsletterForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        showToast("Subscribed successfully! 📬");
-        newsletterForm.reset();
-    });
-}
-
-if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        showToast("Message sent! We will reply soon. 📞");
-        contactForm.reset();
-    });
-}
-
-// Mood Pills Filter
-if (moodPills.length > 0) {
-    moodPills.forEach(pill => {
-        pill.addEventListener("click", () => {
-            moodPills.forEach(p => p.classList.remove("active"));
-            pill.classList.add("active");
-            
-            const mood = pill.dataset.mood;
-            if (mood === "all") {
-                categoryFilter.value = "All";
-                filterSongs();
-            } else {
-                showToast(`Filtered by mood: ${mood} (Feature expanding...)`);
-            }
-        });
-    });
-}
-
-
-/* =========================================
-   18. START WEBSITE
-   ========================================= */
-async function startWebsite() {
-    try {
-        await seedDefaultSongs();
-        await loadAllMusic();
-        filterSongs();
-        displayRecentSongs();
-        displayTrendingSongs();
-        console.log("GABY MUSIC loaded successfully:", allSongs.length, "songs");
-    } catch (error) {
-        console.error("Website loading error:", error);
-        if (musicList) musicList.textContent = "Could not load music. Please refresh the page.";
-    }
-}
-
-
-/* =========================================
-   19. CLEAN UP OBJECT URLS
-   ========================================= */
-window.addEventListener("beforeunload", () => {
-    activeUrls.forEach(url => URL.revokeObjectURL(url));
-});
-
-
-/* =========================================
-   20. MUSIC VISUALIZER
-   ========================================= */
-document.addEventListener("play", event => {
-    if (event.target.tagName === "AUDIO" && visualizer) visualizer.classList.add("playing");
-}, true);
-
-document.addEventListener("pause", event => {
-    if (event.target.tagName === "AUDIO" && visualizer) visualizer.classList.remove("playing");
-}, true);
-
-document.addEventListener("ended", event => {
-    if (event.target.tagName === "AUDIO" && visualizer) visualizer.classList.remove("playing");
-}, true);
-
-
-// START
-startWebsite();
