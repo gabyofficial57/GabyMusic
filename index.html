@@ -1,579 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaby Music | Official</title>
-<style>
-    :root {
-        --bg-primary: #050505;
-        --bg-secondary: #111111;
-        --bg-tertiary: #1a1a1a;
-        --text-primary: #ffffff;
-        --text-secondary: #888888;
-        --accent: #ffffff;
-        --glass-bg: rgba(255, 255, 255, 0.03);
-        --glass-border: rgba(255, 255, 255, 0.08);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-primary);
-        color: var(--text-primary);
-        overflow-x: hidden;
-        cursor: none;
-    }
-
-    /* LIVE ANIMATED BACKGROUND */
-    #particle-canvas {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    /* Custom Cursor */
-    .cursor-dot, .cursor-outline {
-        position: fixed;
-        top: 0; left: 0;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-    }
-    .cursor-dot { width: 8px; height: 8px; background: var(--accent); }
-    .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); transition: transform 0.1s ease; }
-
-    /* Preloader */
-    .preloader {
-        position: fixed; inset: 0;
-        background: var(--bg-primary);
-        z-index: 10000;
-        display: flex; align-items: center; justify-content: center;
-        flex-direction: column;
-        transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-    .preloader.hidden { opacity: 0; visibility: hidden; }
-    .loading-bar { width: 200px; height: 2px; background: var(--bg-tertiary); margin-top: 20px; overflow: hidden; }
-    .loading-bar::after {
-        content: ''; display: block; width: 100%; height: 100%;
-        background: var(--accent);
-        animation: loadAnim 1.5s ease-in-out forwards;
-    }
-    @keyframes loadAnim { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-
-    /* Navbar */
-    nav {
-        position: fixed; top: 0; width: 100%; padding: 20px 50px;
-        display: flex; justify-content: space-between; align-items: center;
-        z-index: 100;
-        background: rgba(5, 5, 5, 0.6);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--glass-border);
-    }
-    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 30px; font-size: 0.9rem; transition: color 0.3s; }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* Hero */
-    .hero {
-        height: 100vh; display: flex; align-items: center; justify-content: center;
-        flex-direction: column; text-align: center; position: relative;
-    }
-    .hero h1 {
-        font-size: 8rem; font-weight: 900; letter-spacing: -5px;
-        line-height: 1; overflow: hidden;
-    }
-    .hero h1 span {
-        display: inline-block;
-        transform: translateY(100%);
-        animation: revealText 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-    }
-    .hero h1 span:nth-child(2) { animation-delay: 0.2s; }
-    @keyframes revealText { to { transform: translateY(0); } }
-
-    .typewriter {
-        font-size: 1.2rem; color: var(--text-secondary); margin-top: 20px;
-        border-right: 2px solid var(--accent);
-        white-space: nowrap; overflow: hidden;
-        animation: typing 3s steps(30) 1s forwards, blink 0.7s step-end infinite;
-        width: 0;
-    }
-    @keyframes typing { to { width: 280px; } }
-    @keyframes blink { 50% { border-color: transparent; } }
-
-    /* Scroll Fade-In */
-    .fade-section {
-        opacity: 0; transform: translateY(50px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-        padding: 100px 50px;
-        position: relative;
-    }
-    .fade-section.visible { opacity: 1; transform: translateY(0); }
-
-    /* Albums Grid */
-    .albums-grid {
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px; max-width: 1200px; margin: 0 auto;
-    }
-    .album-card {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 15px;
-        padding: 20px;
-        backdrop-filter: blur(10px);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        transform-style: preserve-3d;
-        cursor: pointer;
-    }
-    .album-card:hover {
-        box-shadow: 0 10px 30px rgba(255,255,255,0.1);
-        transform: scale(1.02);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaby Music | Premium Experience</title>
     
-    /* 🖼️ ALBUM ART IMAGES */
-    .album-art {
-        width: 100%; height: 250px;
-        background: var(--bg-tertiary);
-        border-radius: 10px; margin-bottom: 15px;
-        overflow: hidden;
-        position: relative;
-    }
-    .album-art img {
-        width: 100%; height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    .album-card:hover .album-art img {
-        transform: scale(1.1);
-    }
-
-    /* Marquee */
-    .marquee-container { overflow: hidden; padding: 50px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
-    .marquee-content {
-        display: flex; gap: 50px; width: max-content;
-        animation: marquee 20s linear infinite;
-    }
-    .marquee-content span { font-size: 3rem; font-weight: 800; color: var(--text-secondary); white-space: nowrap; }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* Music Player */
-    .music-player {
-        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        background: rgba(20, 20, 20, 0.95);
-        backdrop-filter: blur(15px);
-        border: 1px solid var(--glass-border);
-        padding: 15px 30px; border-radius: 50px;
-        display: flex; align-items: center; gap: 20px;
-        z-index: 100;
-        min-width: 400px;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
-    /* 🎵 AUDIO PLAYER CONTROLS */
-    .player-controls {
-        display: flex; align-items: center; gap: 15px;
-    }
-    .play-btn {
-        width: 40px; height: 40px;
-        background: var(--accent);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex; align-items: center; justify-content: center;
-        transition: transform 0.2s;
-    }
-    .play-btn:hover { transform: scale(1.1); }
-    .play-btn svg { width: 20px; height: 20px; fill: var(--bg-primary); }
+    <!-- YOUR CUSTOM CSS FILE -->
+    <link rel="stylesheet" href="style.css">
     
-    .track-info {
-        flex: 1;
-        min-width: 150px;
-    }
-    .track-title {
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 5px;
-    }
-    .track-artist {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-    }
-    
-    .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
-    .visualizer span {
-        width: 3px; background: var(--accent);
-        animation: vizAnim 0.5s ease-in-out infinite alternate;
-    }
-    .visualizer span:nth-child(1) { animation-delay: 0s; height: 5px; }
-    .visualizer span:nth-child(2) { animation-delay: 0.2s; height: 15px; }
-    .visualizer span:nth-child(3) { animation-delay: 0.4s; height: 10px; }
-    .visualizer span:nth-child(4) { animation-delay: 0.1s; height: 20px; }
-    .visualizer.paused span { animation-play-state: paused; }
-    @keyframes vizAnim { to { height: 5px; } }
+    <style>
+        /* =========================================
+           EXTRA DESIGNS & ANIMATIONS (23+ Elements)
+           ========================================= */
+        
+        /* 1. Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0; border-radius: 50%;
+            pointer-events: none; z-index: 99999; transform: translate(-50%, -50%);
+        }
+        .cursor-dot { width: 8px; height: 8px; background: var(--accent); }
+        .cursor-outline { 
+            width: 40px; height: 40px; border: 2px solid var(--accent); 
+            transition: transform 0.1s ease, width 0.3s, height 0.3s; 
+        }
 
-    /* Magnetic Button */
-    .magnetic-btn {
-        padding: 15px 40px; background: transparent; border: 1px solid var(--accent);
-        color: var(--accent); font-size: 1rem; letter-spacing: 2px;
-        cursor: none; transition: transform 0.2s ease, background 0.3s;
-    }
-    .magnetic-btn:hover { background: var(--accent); color: var(--bg-primary); }
+        /* 2. Live Particle Background Canvas */
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.6;
+        }
 
-    footer { padding: 50px; text-align: center; color: var(--text-secondary); border-top: 1px solid var(--glass-border); }
-</style>
+        /* 3. Neon Glow Text Animation */
+        .glow-text {
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent); }
+            to { text-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-hover); }
+        }
+
+        /* 4. Floating Animation for Hero Elements */
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* 5. Staggered Fade In for Song Cards */
+        .song { animation: fadeInUp 0.6s ease-out backwards; }
+        .song:nth-child(1) { animation-delay: 0.1s; }
+        .song:nth-child(2) { animation-delay: 0.2s; }
+        .song:nth-child(3) { animation-delay: 0.3s; }
+        .song:nth-child(4) { animation-delay: 0.4s; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 6. Magnetic Button Effect Base */
+        .magnetic-btn { transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+        /* 7. Gradient Border Animation */
+        .gradient-border {
+            position: relative; background: var(--bg-secondary); border-radius: var(--radius);
+        }
+        .gradient-border::before {
+            content: ""; position: absolute; inset: -2px; border-radius: calc(var(--radius) + 2px);
+            background: linear-gradient(45deg, var(--accent), transparent, var(--accent));
+            z-index: -1; animation: borderRotate 3s linear infinite;
+        }
+        @keyframes borderRotate { 100% { transform: rotate(360deg); } }
+
+        /* 8. Pulse Effect for Play Button */
+        #play-pause-button { animation: pulse-btn 2s infinite; }
+        @keyframes pulse-btn {
+            0% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(138, 43, 226, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); }
+        }
+
+        /* 9. Smooth Theme Transition */
+        body, .sidebar, .song, .modal-content, #now-playing-bar {
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+
+        /* 10. Mobile Menu Overlay Fix */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+        }
+    </style>
 </head>
-<body>
+<body class="dark-mode">
 
-<!-- LIVE ANIMATED BACKGROUND CANVAS -->
-<canvas id="particle-canvas"></canvas>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
 
-<!-- Preloader -->
-<div class="preloader" id="preloader">
-    <h2>GABY MUSIC</h2>
-    <div class="loading-bar"></div>
-</div>
+    <!-- LIVE ANIMATED BACKGROUND -->
+    <canvas id="particle-canvas"></canvas>
 
-<!-- Custom Cursor -->
-<div class="cursor-dot" id="cursor-dot"></div>
-<div class="cursor-outline" id="cursor-outline"></div>
-
-<!-- Navbar -->
-<nav>
-    <div class="logo">GABY</div>
-    <div class="nav-links">
-        <a href="#home">HOME</a>
-        <a href="#music">MUSIC</a>
-        <a href="#tour">TOUR</a>
-        <a href="#contact">CONTACT</a>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader">🎵</div>
+        <p>Loading Gaby Music Experience...</p>
     </div>
-</nav>
 
-<!-- Hero -->
-<section class="hero" id="home">
-    <h1><span>GABY</span> <span>MUSIC</span></h1>
-    <p class="typewriter">Experience the sound of tomorrow...</p>
-</section>
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scroll-progress"></div>
 
-<!-- Marquee -->
-<div class="marquee-container">
-    <div class="marquee-content">
-        <span>NEW ALBUM OUT NOW ★</span>
-        <span>WORLD TOUR 2026 ★</span>
-        <span>NEW ALBUM OUT NOW ★</span>
-        <span>WORLD TOUR 2026 ★</span>
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- SCROLL TO TOP BUTTON -->
+    <button id="scroll-top-btn" title="Go to top">↑</button>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner">
+        <span>🍪 We use cookies to enhance your music experience.</span>
+        <button id="accept-cookies">Accept</button>
     </div>
-</div>
 
-<!-- Albums Section -->
-<section class="fade-section" id="music">
-    <h2 style="text-align: center; margin-bottom: 50px; font-size: 3rem;">LATEST RELEASES</h2>
-    <div class="albums-grid">
-        
-        <!-- 🖼️ ALBUM 1 - Shyiramo ifoto yawe hano -->
-        <div class="album-card" data-tilt data-audio="indirimbo1.mp3" data-title="Izina ry'Indirimbo 1">
-            <div class="album-art">
-                <!-- Shyira ifoto yawe hano (urugero: images/album1.jpg) -->
-                <img src="images/album1.jpg" alt="Album 1" onerror="this.style.display='none'">
-            </div>
-            <h3>Izina ry'Album 1</h3>
-            <p style="color: var(--text-secondary);">Album • 2026</p>
+    <!-- MOBILE MENU TOGGLE -->
+    <button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('active')" style="position:fixed; top:20px; left:20px; z-index:1001; background:var(--accent); color:white; border:none; padding:10px 15px; border-radius:8px; font-size:1.2rem; cursor:pointer; display:none;">☰</button>
+    <style>@media(max-width:1024px){.mobile-menu-btn{display:block!important}}</style>
+
+    <!-- =========================================
+         SIDEBAR NAVIGATION
+         ========================================= -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🎵</span> GABY MUSIC
         </div>
         
-        <!-- 🖼️ ALBUM 2 - Shyiramo ifoto yawe hano -->
-        <div class="album-card" data-tilt data-audio="indirimbo2.mp3" data-title="Izina ry'Indirimbo 2">
-            <div class="album-art">
-                <img src="images/album2.jpg" alt="Album 2" onerror="this.style.display='none'">
+        <div class="user-profile">
+            <div class="user-avatar">G</div>
+            <div class="user-info">
+                <div class="user-name">Gaby Official</div>
+                <div class="user-status">Premium Artist</div>
             </div>
-            <h3>Izina ry'Album 2</h3>
-            <p style="color: var(--text-secondary);">Single • 2026</p>
         </div>
+
+        <div class="sidebar-heading">Main Menu</div>
+        <nav class="sidebar-nav">
+            <a href="#" class="active">🏠 Home</a>
+            <a href="#music-section">🎵 Library</a>
+            <a href="#trending-section">🔥 Trending</a>
+            <a href="#recent-section">🕒 Recent</a>
+        </nav>
+
+        <div class="sidebar-heading">Player Tools</div>
+        <nav class="sidebar-nav">
+            <a href="#" id="btn-queue">📋 Play Queue</a>
+            <a href="#" id="btn-shortcuts">⌨️ Shortcuts</a>
+        </nav>
+
+        <div class="theme-toggle">
+            <button id="theme-switch" class="magnetic-btn">🌙 Switch Theme</button>
+        </div>
+
+        <div class="sidebar-bottom">
+            &copy; 2026 Gaby Music. All Rights Reserved.
+        </div>
+    </aside>
+
+    <!-- =========================================
+         MAIN CONTENT AREA
+         ========================================= -->
+    <main class="main-content">
         
-        <!-- 🖼️ ALBUM 3 - Shyiramo ifoto yawe hano -->
-        <div class="album-card" data-tilt data-audio="indirimbo3.mp3" data-title="Izina ry'Indirimbo 3">
-            <div class="album-art">
-                <img src="images/album3.jpg" alt="Album 3" onerror="this.style.display='none'">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <div class="breadcrumbs"><a href="#">Home</a> / Dashboard</div>
+                <h2 class="glow-text">Welcome Back, Gaby!</h2>
+                <p>Discover the best rhythms in a premium immersive environment.</p>
             </div>
-            <h3>Izina ry'Album 3</h3>
-            <p style="color: var(--text-secondary);">EP • 2025</p>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="welcome float-anim">
+            <div class="welcome-label">✨ FEATURED EXPERIENCE</div>
+            <h1>Feel The Rhythm</h1>
+            <p>Experience music like never before with our premium high-fidelity player, live visualizers, and immersive monochrome design.</p>
+            <a href="#music-section" class="hero-button magnetic-btn">Explore Music</a>
+
+            <!-- Quick Stats (Updated by JS) -->
+            <div class="quick-stats">
+                <div class="stat-card gradient-border">
+                    <h3 id="stat-songs">0</h3>
+                    <p>Total Songs</p>
+                </div>
+                <div class="stat-card gradient-border">
+                    <h3 id="stat-artists">0</h3>
+                    <p>Artists</p>
+                </div>
+                <div class="stat-card gradient-border">
+                    <h3 id="stat-plays">0</h3>
+                    <p>Total Plays</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Section -->
+        <section class="search-section">
+            <input type="text" id="search-input" placeholder="Search for songs, artists, or albums...">
+            <button id="search-button" class="magnetic-btn">🔍 Search</button>
+            <select id="category-filter">
+                <option value="All">All Categories</option>
+                <!-- Populated dynamically by JS -->
+            </select>
+        </section>
+
+        <!-- Mood Filters -->
+        <div class="mood-filters">
+            <button class="mood-pill active magnetic-btn" data-mood="all">All Vibes</button>
+            <button class="mood-pill magnetic-btn" data-mood="chill">😌 Chill</button>
+            <button class="mood-pill magnetic-btn" data-mood="party">🎉 Party</button>
+            <button class="mood-pill magnetic-btn" data-mood="workout">💪 Workout</button>
+            <button class="mood-pill magnetic-btn" data-mood="focus">🎯 Focus</button>
         </div>
-        
-    </div>
-</section>
 
-<!-- Contact -->
-<section class="fade-section" id="contact" style="text-align: center;">
-    <h2 style="margin-bottom: 30px;">JOIN THE JOURNEY</h2>
-    <button class="magnetic-btn" id="magnetic-btn">LISTEN NOW</button>
-</section>
+        <!-- Add Song Form (Local Upload) -->
+        <section class="add-song gradient-border">
+            <h2>📤 Add Local Song</h2>
+            <p>Upload your own MP3 and Cover Art to your personal library.</p>
+            <form id="add-song-form">
+                <label for="song-title">Song Title</label>
+                <input type="text" id="song-title" placeholder="e.g., Diez Dola - ONIVA" required>
+                
+                <label for="song-category">Category</label>
+                <select id="song-category">
+                    <option value="Rwandan Music">Rwandan Music</option>
+                    <option value="Afrobeat">Afrobeat</option>
+                    <option value="Hip Hop">Hip Hop</option>
+                    <option value="Gospel">Gospel</option>
+                    <option value="Amapiano">Amapiano</option>
+                </select>
 
-<footer>
-    <p>&copy; 2026 Gaby Music. All Rights Reserved.</p>
-</footer>
+                <label for="song-audio">Audio File (MP3/WAV)</label>
+                <input type="file" id="song-audio" accept="audio/*" required>
 
-<!-- 🎵 MUSIC PLAYER WITH AUDIO -->
-<div class="music-player">
-    <div class="player-controls">
-        <button class="play-btn" id="play-btn">
-            <svg id="play-icon" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-            </svg>
-        </button>
+                <label for="song-image">Cover Image (JPG/PNG)</label>
+                <input type="file" id="song-image" accept="image/*" required>
+
+                <button type="submit" class="magnetic-btn">➕ Add to Library</button>
+            </form>
+        </section>
+
+        <!-- Trending Songs Section -->
+        <section id="trending-section">
+            <div class="section-heading">
+                <h2>🔥 Trending Now</h2>
+                <p>Top picks and most played tracks this week</p>
+            </div>
+            <div id="trending-songs"></div> <!-- Populated by JS -->
+        </section>
+
+        <!-- Main Music Library Section -->
+        <section id="music-section">
+            <div class="section-heading">
+                <h2>🎵 Your Music Library</h2>
+                <p>All your favorite tracks, local and GitHub synced, in one place</p>
+            </div>
+            <div id="music-list"></div> <!-- Populated by JS -->
+        </section>
+
+        <!-- Recently Added Section -->
+        <section id="recent-section">
+            <div class="section-heading">
+                <h2>🕒 Recently Added</h2>
+            </div>
+            <div id="recent-songs"></div> <!-- Populated by JS -->
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter gradient-border">
+            <h2>📬 Stay Updated</h2>
+            <p>Get notified instantly when new albums or singles drop.</p>
+            <form id="newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="magnetic-btn">Subscribe</button>
+            </form>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact gradient-border">
+            <h2>📞 Contact Us</h2>
+            <form id="contact-form">
+                <textarea rows="4" placeholder="Write your message or feedback here..." required></textarea>
+                <button type="submit" class="magnetic-btn">Send Message</button>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h3>GABY MUSIC</h3>
+            <p>Premium Audio Experience &copy; 2026. Built with passion.</p>
+        </footer>
+
+    </main>
+
+    <!-- =========================================
+         FIXED NOW PLAYING BAR (Bottom)
+         ========================================= -->
+    <div id="now-playing-bar">
+        <div class="now-playing-info">
+            <img src="images/cover1.jpg" id="now-playing-image" alt="Album Cover" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23333%22/><text x=%2250%22 y=%2250%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22>🎵</text></svg>'">
+            <div class="now-playing-details">
+                <h4 id="now-playing-title">Select a Song</h4>
+                <p>Gaby Music Official</p>
+                <div id="music-visualizer">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <button id="btn-shuffle" class="magnetic-btn" title="Shuffle">🔀</button>
+            <button id="btn-repeat" class="magnetic-btn" title="Repeat">🔁</button>
+            <button id="play-pause-button" class="magnetic-btn" title="Play/Pause">▶</button>
+            <button id="btn-like" class="magnetic-btn" title="Like">🤍</button>
+            <button id="btn-share" class="magnetic-btn" title="Share">📤</button>
+            
+            <span class="time-display" id="current-time">0:00</span>
+            <input type="range" id="song-progress" value="0" min="0" max="100" title="Seek">
+            <span class="time-display" id="total-time">0:00</span>
+        </div>
     </div>
-    <div class="track-info">
-        <div class="track-title" id="track-title">Hitamo indirimbo</div>
-        <div class="track-artist">Gaby Music</div>
-    </div>
-    <div class="visualizer paused" id="visualizer">
-        <span></span><span></span><span></span><span></span>
-    </div>
+
+    <!-- =========================================
+         SIDE PANELS & MODALS
+         ========================================= -->
     
-    <!-- 🎵 AUDIO ELEMENT - Shyiramo indirimbo zawe hano -->
-    <audio id="audio-player" preload="metadata">
-        <!-- Shyira indirimbo zawe hano (urugero: audio/indirimbo1.mp3) -->
-        <source src="" type="audio/mpeg">
-    </audio>
-</div>
+    <!-- Queue Panel -->
+    <div id="queue-panel" class="side-panel">
+        <div class="panel-header">
+            <h3>📋 Play Queue</h3>
+            <button id="close-queue">×</button>
+        </div>
+        <div id="queue-list">
+            <p style="color: var(--text-secondary); text-align: center; margin-top: 20px;">Queue is currently empty</p>
+        </div>
+    </div>
 
-<script>
-    // ============================================
-    // LIVE ANIMATED PARTICLE BACKGROUND
-    // ============================================
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: null, y: null, radius: 150 };
+    <!-- Lyrics Modal -->
+    <div id="lyrics-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" id="close-lyrics">×</button>
+            <h2>🎤 Lyrics</h2>
+            <p style="color: var(--text-secondary); margin-top: 15px; line-height: 1.8;">
+                Lyrics will appear here when a song is playing and lyrics are available.<br><br>
+                (Feature expanding in next update...)
+            </p>
+ is empty</p>
+        </div>
+    </div>
 
-    function resizeCanvas() {
+    <!-- Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" id="close-shortcuts">×</button>
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <ul class="shortcuts-list">
+                <li><span>Play / Pause</span> <kbd>Space</kbd></li>
+                <li><span>Mute / Unmute</span> <kbd>M</kbd></li>
+                <li><span>Like Current Song</span> <kbd>L</kbd></li>
+                <li><span>Toggle Play Queue</span> <kbd>Q</kbd></li>
+                <li><span>Close Any Modal</span> <kbd>Esc</kbd></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- =========================================
+         LIVE PARTICLE BACKGROUND SCRIPT
+         ========================================= -->
+    <script>
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Particle Background Logic
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-    });
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 0.5;
-            this.speedX = (Math.random() - 0.5) * 0.5;
-            this.speedY = (Math.random() - 0.5) * 0.5;
-            this.density = (Math.random() * 30) + 1;
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#8a2be2';
+                ctx.globalAlpha = 0.4;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
 
-            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-            if (mouse.x != null && mouse.y != null) {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    let forceDirectionX = dx / distance;
-                    let forceDirectionY = dy / distance;
-                    let maxDistance = mouse.radius;
-                    let force = (maxDistance - distance) / maxDistance;
-                    let directionX = (forceDirectionX * force * this.density);
-                    let directionY = (forceDirectionY * force * this.density);
-                    this.x -= directionX;
-                    this.y -= directionY;
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Draw connections
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#8a2be2';
+                        ctx.globalAlpha = 1 - (distance / 100);
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
                 }
             }
+            requestAnimationFrame(animateParticles);
         }
 
-        draw() {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-        }
-    }
-
-    function initParticles() {
-        particles = [];
-        let numberOfParticles = Math.min((canvas.width * canvas.height) / 9000, 150);
-        for (let i = 0; i < numberOfParticles; i++) {
-            particles.push(new Particle());
-        }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
-
-    function connectParticles() {
-        for (let a = 0; a < particles.length; a++) {
-            for (let b = a; b < particles.length; b++) {
-                let dx = particles[a].x - particles[b].x;
-                let dy = particles[a].y - particles[b].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 120) {
-                    let opacity = 1 - (distance / 120);
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[a].x, particles[a].y);
-                    ctx.lineTo(particles[b].x, particles[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-        }
-        connectParticles();
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    // ============================================
-    // OTHER ANIMATIONS
-    // ============================================
-
-    // Hide Preloader
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            document.getElementById('preloader').classList.add('hidden');
-        }, 1500);
-    });
-
-    // Custom Cursor
-    const dot = document.getElementById('cursor-dot');
-    const outline = document.getElementById('cursor-outline');
-    let mouseX = 0, mouseY = 0;
-    let outlineX = 0, outlineY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX; mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-    });
-
-    function animateCursor() {
-        outlineX += (mouseX - outlineX) * 0.15;
-        outlineY += (mouseY - outlineY) * 0.15;
-        outline.style.left = outlineX + 'px';
-        outline.style.top = outlineY + 'px';
-        requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Scroll Fade-In
-    const faders = document.querySelectorAll('.fade-section');
-    const appearOptions = { threshold: 0.15 };
-    const appearObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
         });
-    }, appearOptions);
-    faders.forEach(fader => appearObserver.observe(fader));
 
-    // 3D Tilt Effect
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-        });
-    });
+        initParticles();
+        animateParticles();
+    </script>
 
-    // Magnetic Button
-    const magBtn = document.getElementById('magnetic-btn');
-    magBtn.addEventListener('mousemove', (e) => {
-        const rect = magBtn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        magBtn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-    });
-    magBtn.addEventListener('mouseleave', () => {
-        magBtn.style.transform = 'translate(0, 0)';
-    });
-
-    // ============================================
-    // 🎵 MUSIC PLAYER FUNCTIONALITY
-    // ============================================
-    const audioPlayer = document.getElementById('audio-player');
-    const playBtn = document.getElementById('play-btn');
-    const playIcon = document.getElementById('play-icon');
-    const trackTitle = document.getElementById('track-title');
-    const visualizer = document.getElementById('visualizer');
-    let isPlaying = false;
-
-    // Album card click - Load and play audio
-    document.querySelectorAll('.album-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const audioSrc = card.getAttribute('data-audio');
-            const title = card.getAttribute('data-title');
-            
-            if (audioSrc) {
-                audioPlayer.src = audioSrc;
-                trackTitle.textContent = title;
-                audioPlayer.play();
-                isPlaying = true;
-                updatePlayButton();
-                visualizer.classList.remove('paused');
-            }
-        });
-    });
-
-    // Play/Pause button
-    playBtn.addEventListener('click', () => {
-        if (audioPlayer.src) {
-            if (isPlaying) {
-                audioPlayer.pause();
-                isPlaying = false;
-                visualizer.classList.add('paused');
-            } else {
-                audioPlayer.play();
-                isPlaying = true;
-                visualizer.classList.remove('paused');
-            }
-            updatePlayButton();
-        }
-    });
-
-    // Update play/pause icon
-    function updatePlayButton() {
-        if (isPlaying) {
-            playIcon.innerHTML = '<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>';
-        } else {
-            playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-        }
-    }
-
-    // When audio ends
-    audioPlayer.addEventListener('ended', () => {
-        isPlaying = false;
-        updatePlayButton();
-        visualizer.classList.add('paused');
-    });
-</script>
+    <!-- YOUR MAIN JAVASCRIPT FILE (Loads your songs safely) -->
+    <script src="script.js"></script>
 
 </body>
 </html>
