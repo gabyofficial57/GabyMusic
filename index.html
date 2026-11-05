@@ -5,23 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gaby Music | Official</title>
 <style>
-    /* =========================================
-       1. SINGLE COLOR MODE (MONOCHROME THEME)
-       ========================================= */
     :root {
         --bg-primary: #050505;
         --bg-secondary: #111111;
         --bg-tertiary: #1a1a1a;
         --text-primary: #ffffff;
         --text-secondary: #888888;
-        --accent: #ffffff; /* Ibara rimwe ry'umweru gusa */
+        --accent: #ffffff;
         --glass-bg: rgba(255, 255, 255, 0.03);
         --glass-border: rgba(255, 255, 255, 0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    /* 20. Smooth Scroll */
     html { scroll-behavior: smooth; }
 
     body {
@@ -29,10 +24,19 @@
         background-color: var(--bg-primary);
         color: var(--text-primary);
         overflow-x: hidden;
-        cursor: none; /* 1. Custom Cursor */
+        cursor: none;
     }
 
-    /* 1. Custom Cursor */
+    /* LIVE ANIMATED BACKGROUND */
+    #particle-canvas {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* Custom Cursor */
     .cursor-dot, .cursor-outline {
         position: fixed;
         top: 0; left: 0;
@@ -44,7 +48,7 @@
     .cursor-dot { width: 8px; height: 8px; background: var(--accent); }
     .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); transition: transform 0.1s ease; }
 
-    /* 9 & 21. Preloader & Loading Bar */
+    /* Preloader */
     .preloader {
         position: fixed; inset: 0;
         background: var(--bg-primary);
@@ -62,12 +66,12 @@
     }
     @keyframes loadAnim { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-    /* 4. Minimalist Navbar */
+    /* Navbar */
     nav {
         position: fixed; top: 0; width: 100%; padding: 20px 50px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 100;
-        background: rgba(5, 5, 5, 0.8);
+        background: rgba(5, 5, 5, 0.6);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--glass-border);
     }
@@ -75,15 +79,14 @@
     .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 30px; font-size: 0.9rem; transition: color 0.3s; }
     .nav-links a:hover { color: var(--accent); }
 
-    /* 5 & 11. Hero Section & Text Reveal */
+    /* Hero */
     .hero {
         height: 100vh; display: flex; align-items: center; justify-content: center;
         flex-direction: column; text-align: center; position: relative;
     }
     .hero h1 {
         font-size: 8rem; font-weight: 900; letter-spacing: -5px;
-        line-height: 1;
-        overflow: hidden;
+        line-height: 1; overflow: hidden;
     }
     .hero h1 span {
         display: inline-block;
@@ -93,7 +96,6 @@
     .hero h1 span:nth-child(2) { animation-delay: 0.2s; }
     @keyframes revealText { to { transform: translateY(0); } }
 
-    /* 19. Typewriter Effect */
     .typewriter {
         font-size: 1.2rem; color: var(--text-secondary); margin-top: 20px;
         border-right: 2px solid var(--accent);
@@ -104,15 +106,16 @@
     @keyframes typing { to { width: 280px; } }
     @keyframes blink { 50% { border-color: transparent; } }
 
-    /* 13. Scroll Fade-In */
+    /* Scroll Fade-In */
     .fade-section {
         opacity: 0; transform: translateY(50px);
         transition: opacity 0.8s ease, transform 0.8s ease;
         padding: 100px 50px;
+        position: relative;
     }
     .fade-section.visible { opacity: 1; transform: translateY(0); }
 
-    /* 2 & 17. Glassmorphism & 3D Tilt Cards */
+    /* Albums Grid */
     .albums-grid {
         display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 30px; max-width: 1200px; margin: 0 auto;
@@ -125,21 +128,31 @@
         backdrop-filter: blur(10px);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         transform-style: preserve-3d;
+        cursor: pointer;
     }
-    /* 14. Hover Glow & Scale */
     .album-card:hover {
         box-shadow: 0 10px 30px rgba(255,255,255,0.1);
         transform: scale(1.02);
     }
+    
+    /* 🖼️ ALBUM ART IMAGES */
     .album-art {
         width: 100%; height: 250px;
         background: var(--bg-tertiary);
         border-radius: 10px; margin-bottom: 15px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 3rem; color: var(--text-secondary);
+        overflow: hidden;
+        position: relative;
+    }
+    .album-art img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .album-card:hover .album-art img {
+        transform: scale(1.1);
     }
 
-    /* 16. Infinite Marquee */
+    /* Marquee */
     .marquee-container { overflow: hidden; padding: 50px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
     .marquee-content {
         display: flex; gap: 50px; width: max-content;
@@ -148,16 +161,48 @@
     .marquee-content span { font-size: 3rem; font-weight: 800; color: var(--text-secondary); white-space: nowrap; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* 3 & 15. Fixed Music Player & Audio Visualizer */
+    /* Music Player */
     .music-player {
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        background: rgba(20, 20, 20, 0.9);
+        background: rgba(20, 20, 20, 0.95);
         backdrop-filter: blur(15px);
         border: 1px solid var(--glass-border);
         padding: 15px 30px; border-radius: 50px;
         display: flex; align-items: center; gap: 20px;
         z-index: 100;
+        min-width: 400px;
     }
+    
+    /* 🎵 AUDIO PLAYER CONTROLS */
+    .player-controls {
+        display: flex; align-items: center; gap: 15px;
+    }
+    .play-btn {
+        width: 40px; height: 40px;
+        background: var(--accent);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: transform 0.2s;
+    }
+    .play-btn:hover { transform: scale(1.1); }
+    .play-btn svg { width: 20px; height: 20px; fill: var(--bg-primary); }
+    
+    .track-info {
+        flex: 1;
+        min-width: 150px;
+    }
+    .track-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .track-artist {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+    
     .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
     .visualizer span {
         width: 3px; background: var(--accent);
@@ -167,9 +212,10 @@
     .visualizer span:nth-child(2) { animation-delay: 0.2s; height: 15px; }
     .visualizer span:nth-child(3) { animation-delay: 0.4s; height: 10px; }
     .visualizer span:nth-child(4) { animation-delay: 0.1s; height: 20px; }
+    .visualizer.paused span { animation-play-state: paused; }
     @keyframes vizAnim { to { height: 5px; } }
 
-    /* 18. Magnetic Buttons */
+    /* Magnetic Button */
     .magnetic-btn {
         padding: 15px 40px; background: transparent; border: 1px solid var(--accent);
         color: var(--accent); font-size: 1rem; letter-spacing: 2px;
@@ -182,17 +228,20 @@
 </head>
 <body>
 
-<!-- 9. Preloader -->
+<!-- LIVE ANIMATED BACKGROUND CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Preloader -->
 <div class="preloader" id="preloader">
     <h2>GABY MUSIC</h2>
     <div class="loading-bar"></div>
 </div>
 
-<!-- 1. Custom Cursor -->
+<!-- Custom Cursor -->
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-outline" id="cursor-outline"></div>
 
-<!-- 4. Navbar -->
+<!-- Navbar -->
 <nav>
     <div class="logo">GABY</div>
     <div class="nav-links">
@@ -203,13 +252,13 @@
     </div>
 </nav>
 
-<!-- 5 & 11 & 19. Hero Section -->
+<!-- Hero -->
 <section class="hero" id="home">
     <h1><span>GABY</span> <span>MUSIC</span></h1>
     <p class="typewriter">Experience the sound of tomorrow...</p>
 </section>
 
-<!-- 16. Marquee -->
+<!-- Marquee -->
 <div class="marquee-container">
     <div class="marquee-content">
         <span>NEW ALBUM OUT NOW ★</span>
@@ -219,29 +268,43 @@
     </div>
 </div>
 
-<!-- 2 & 17. Albums Section -->
+<!-- Albums Section -->
 <section class="fade-section" id="music">
     <h2 style="text-align: center; margin-bottom: 50px; font-size: 3rem;">LATEST RELEASES</h2>
     <div class="albums-grid">
-        <div class="album-card" data-tilt>
-            <div class="album-art">🎵</div>
-            <h3>Midnight Echoes</h3>
+        
+        <!-- 🖼️ ALBUM 1 - Shyiramo ifoto yawe hano -->
+        <div class="album-card" data-tilt data-audio="indirimbo1.mp3" data-title="Izina ry'Indirimbo 1">
+            <div class="album-art">
+                <!-- Shyira ifoto yawe hano (urugero: images/album1.jpg) -->
+                <img src="images/album1.jpg" alt="Album 1" onerror="this.style.display='none'">
+            </div>
+            <h3>Izina ry'Album 1</h3>
             <p style="color: var(--text-secondary);">Album • 2026</p>
         </div>
-        <div class="album-card" data-tilt>
-            <div class="album-art">🎧</div>
-            <h3>Neon Shadows</h3>
+        
+        <!-- 🖼️ ALBUM 2 - Shyiramo ifoto yawe hano -->
+        <div class="album-card" data-tilt data-audio="indirimbo2.mp3" data-title="Izina ry'Indirimbo 2">
+            <div class="album-art">
+                <img src="images/album2.jpg" alt="Album 2" onerror="this.style.display='none'">
+            </div>
+            <h3>Izina ry'Album 2</h3>
             <p style="color: var(--text-secondary);">Single • 2026</p>
         </div>
-        <div class="album-card" data-tilt>
-            <div class="album-art">🎹</div>
-            <h3>Acoustic Sessions</h3>
+        
+        <!-- 🖼️ ALBUM 3 - Shyiramo ifoto yawe hano -->
+        <div class="album-card" data-tilt data-audio="indirimbo3.mp3" data-title="Izina ry'Indirimbo 3">
+            <div class="album-art">
+                <img src="images/album3.jpg" alt="Album 3" onerror="this.style.display='none'">
+            </div>
+            <h3>Izina ry'Album 3</h3>
             <p style="color: var(--text-secondary);">EP • 2025</p>
         </div>
+        
     </div>
 </section>
 
-<!-- 18. Magnetic Button Section -->
+<!-- Contact -->
 <section class="fade-section" id="contact" style="text-align: center;">
     <h2 style="margin-bottom: 30px;">JOIN THE JOURNEY</h2>
     <button class="magnetic-btn" id="magnetic-btn">LISTEN NOW</button>
@@ -251,23 +314,146 @@
     <p>&copy; 2026 Gaby Music. All Rights Reserved.</p>
 </footer>
 
-<!-- 3 & 15. Fixed Music Player -->
+<!-- 🎵 MUSIC PLAYER WITH AUDIO -->
 <div class="music-player">
-    <div class="visualizer">
+    <div class="player-controls">
+        <button class="play-btn" id="play-btn">
+            <svg id="play-icon" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="track-info">
+        <div class="track-title" id="track-title">Hitamo indirimbo</div>
+        <div class="track-artist">Gaby Music</div>
+    </div>
+    <div class="visualizer paused" id="visualizer">
         <span></span><span></span><span></span><span></span>
     </div>
-    <span>Now Playing: Midnight Echoes</span>
+    
+    <!-- 🎵 AUDIO ELEMENT - Shyiramo indirimbo zawe hano -->
+    <audio id="audio-player" preload="metadata">
+        <!-- Shyira indirimbo zawe hano (urugero: audio/indirimbo1.mp3) -->
+        <source src="" type="audio/mpeg">
+    </audio>
 </div>
 
 <script>
-    // 9. Hide Preloader
+    // ============================================
+    // LIVE ANIMATED PARTICLE BACKGROUND
+    // ============================================
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 150 };
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.density = (Math.random() * 30) + 1;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+            if (mouse.x != null && mouse.y != null) {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    let forceDirectionX = dx / distance;
+                    let forceDirectionY = dy / distance;
+                    let maxDistance = mouse.radius;
+                    let force = (maxDistance - distance) / maxDistance;
+                    let directionX = (forceDirectionX * force * this.density);
+                    let directionY = (forceDirectionY * force * this.density);
+                    this.x -= directionX;
+                    this.y -= directionY;
+                }
+            }
+        }
+
+        draw() {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        let numberOfParticles = Math.min((canvas.width * canvas.height) / 9000, 150);
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+    initParticles();
+    window.addEventListener('resize', initParticles);
+
+    function connectParticles() {
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+                let dx = particles[a].x - particles[b].x;
+                let dy = particles[a].y - particles[b].y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 120) {
+                    let opacity = 1 - (distance / 120);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        connectParticles();
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ============================================
+    // OTHER ANIMATIONS
+    // ============================================
+
+    // Hide Preloader
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.getElementById('preloader').classList.add('hidden');
         }, 1500);
     });
 
-    // 1. Custom Cursor Logic
+    // Custom Cursor
     const dot = document.getElementById('cursor-dot');
     const outline = document.getElementById('cursor-outline');
     let mouseX = 0, mouseY = 0;
@@ -279,7 +465,6 @@
         dot.style.top = mouseY + 'px';
     });
 
-    // Smooth follow for outline
     function animateCursor() {
         outlineX += (mouseX - outlineX) * 0.15;
         outlineY += (mouseY - outlineY) * 0.15;
@@ -289,7 +474,7 @@
     }
     animateCursor();
 
-    // 13. Scroll Fade-In (Intersection Observer)
+    // Scroll Fade-In
     const faders = document.querySelectorAll('.fade-section');
     const appearOptions = { threshold: 0.15 };
     const appearObserver = new IntersectionObserver((entries, observer) => {
@@ -301,7 +486,7 @@
     }, appearOptions);
     faders.forEach(fader => appearObserver.observe(fader));
 
-    // 17. 3D Tilt Effect on Album Cards
+    // 3D Tilt Effect
     document.querySelectorAll('[data-tilt]').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -318,7 +503,7 @@
         });
     });
 
-    // 18. Magnetic Button Effect
+    // Magnetic Button
     const magBtn = document.getElementById('magnetic-btn');
     magBtn.addEventListener('mousemove', (e) => {
         const rect = magBtn.getBoundingClientRect();
@@ -328,6 +513,65 @@
     });
     magBtn.addEventListener('mouseleave', () => {
         magBtn.style.transform = 'translate(0, 0)';
+    });
+
+    // ============================================
+    // 🎵 MUSIC PLAYER FUNCTIONALITY
+    // ============================================
+    const audioPlayer = document.getElementById('audio-player');
+    const playBtn = document.getElementById('play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const trackTitle = document.getElementById('track-title');
+    const visualizer = document.getElementById('visualizer');
+    let isPlaying = false;
+
+    // Album card click - Load and play audio
+    document.querySelectorAll('.album-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const audioSrc = card.getAttribute('data-audio');
+            const title = card.getAttribute('data-title');
+            
+            if (audioSrc) {
+                audioPlayer.src = audioSrc;
+                trackTitle.textContent = title;
+                audioPlayer.play();
+                isPlaying = true;
+                updatePlayButton();
+                visualizer.classList.remove('paused');
+            }
+        });
+    });
+
+    // Play/Pause button
+    playBtn.addEventListener('click', () => {
+        if (audioPlayer.src) {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                visualizer.classList.add('paused');
+            } else {
+                audioPlayer.play();
+                isPlaying = true;
+                visualizer.classList.remove('paused');
+            }
+            updatePlayButton();
+        }
+    });
+
+    // Update play/pause icon
+    function updatePlayButton() {
+        if (isPlaying) {
+            playIcon.innerHTML = '<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>';
+        } else {
+            playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        }
+    }
+
+    // When audio ends
+    audioPlayer.addEventListener('ended', () => {
+        isPlaying = false;
+        updatePlayButton();
+        visualizer.classList.add('paused');
     });
 </script>
 
